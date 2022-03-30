@@ -1,0 +1,1 @@
+<view><button data-event-opts="{{[['tap',[['btngetdata',['$event']]]]]}}" bindtap="__e">子组件按钮</button></view>

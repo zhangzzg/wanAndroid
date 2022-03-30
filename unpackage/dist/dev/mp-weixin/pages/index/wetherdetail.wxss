@@ -1,0 +1,109 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* uni.scss */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.content {
+  height: 100%;
+  background-color: #DCDFE6;
+}
+.uni-navbar .uni-navbar--border {
+  border-bottom-width: 0.5px !important;
+}
+.weather {
+  width: 750rpx;
+  height: 1040rpx;
+  background: #FFFFFF;
+}
+.weather .image {
+  width: 750rpx;
+  height: 1040rpx;
+}
+.weather .title_area {
+  position: relative;
+  bottom: 600rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weather .title_area .temp {
+  font-size: 60rpx;
+  color: #FFFFFF;
+}
+.detail {
+  width: 670rpx;
+  display: flex;
+  flex-direction: column;
+  margin: 20rpx;
+  padding: 20rpx;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  color: #333333;
+}
+.detail .detail_info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+.detail .detail_info .wether_info {
+  display: flex;
+}
+.detail .detail_info .wether_info .info {
+  margin-bottom: 10rpx;
+  font-size: 14px;
+  margin-right: 20rpx;
+}
+.detail .detail_info .wether_info .icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 20rpx;
+}
+.life {
+  width: 670rpx;
+  margin: 20rpx;
+  padding: 20rpx;
+  border-radius: 2px;
+  background-color: #ffffff;
+}
+.life .lift_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+.life .lift_content .item {
+  width: 325rpx;
+  display: flex;
+  margin-top: 20rpx;
+  align-items: center;
+}
+.life .lift_content .image {
+  width: 106rpx;
+  height: 106rpx;
+}
+.life .lift_content .text {
+  margin-left: 20rpx;
+}
+

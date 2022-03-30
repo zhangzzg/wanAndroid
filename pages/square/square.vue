@@ -1,0 +1,120 @@
+<template>
+	<view>
+		<uni-nav-bar title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
+			<view class="title">
+				<view >
+					<text class="label" v-show="item.fresh">新</text>
+					<text class="text">{{item.shareUser}}</text>
+				</view>
+				<text class="text">{{item.niceDate}}</text>
+			</view>
+			<text class="des">{{item.title}}</text>
+			<view class="bottom">
+				<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
+				<view class="fav" @click.stop="favClick">
+					<uni-fav :checked="item.collect" />
+				</view>
+			</view>
+			<view class="line"></view>
+		</view>
+		<uni-fab  horizontal="right" vertical="bottom" @fabClick="fabClick"></uni-fab>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				totalData: [],
+				bold: true,
+				offset: [5, -5],
+				cid: 408,
+				page: 0
+			}
+		},
+		onLoad() {
+			this.getWxarticleItemData()
+		},
+		onPullDownRefresh() {
+			this.page = 0
+			this.getWxarticleItemData()
+		},
+		onReachBottom() {
+			this.page ++
+			this.getWxarticleItemData()
+		},
+		methods: {
+			fabClick(){
+				uni.pageScrollTo({
+					scrollTop:0
+				})
+			},
+			itemClick(item){
+				console.log("item：",item)
+				uni.navigateTo({
+					url:"../search/detail/detail?link="+item.link+"&&title="+item.title
+				})
+			},
+			favClick(){
+				console.log("收藏")
+			},
+			async getWxarticleItemData() {
+				const res = await this.$myWebHttp({
+					url: "user_article/list/" + this.page + "/json",
+				})
+				console.log("广场数据:", res.data.data.datas)
+				if(this.page == 0){
+					this.totalData = res.data.data.datas
+				}else{
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}
+			},
+		}
+	}
+</script>
+
+<style lang="scss">
+	.list-item {
+		display: flex;
+		flex-direction: column;
+        margin: 15rpx;
+		.title {
+			display: flex;
+			justify-content: space-between;
+            .label {
+				font-size: 25rpx;
+				color: #dd524d;
+				margin-right: 15rpx;
+				border: 1px solid;
+				border-radius: 2px;
+				padding-left: 8rpx;
+				padding-right: 8rpx;
+			}
+			.text {
+			 color: #999999;
+				font-size: 20rpx;
+			}
+		}
+
+		.des {
+			color: #333333;
+			font-size: 30rpx;
+			margin-top: 20rpx;
+			margin-bottom: 20rpx;
+		}
+
+		.bottom {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+            margin-bottom: 20rpx;  
+			.noted {
+				display: flex;
+				font-size: 15rpx;
+				color: #999999;
+				align-items: flex-end;
+			}
+		}
+	}
+</style>

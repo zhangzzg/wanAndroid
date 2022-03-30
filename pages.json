@@ -1,0 +1,121 @@
+{
+	"easycom": {
+		// npm安装的方式不需要前面的"@/"，下载安装的方式需要"@/"
+		// npm安装方式
+		// "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+		// 下载安装方式
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 300
+			}
+		
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/index/wetherdetail"
+
+		}, {
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 300
+			}
+
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/search/detail/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "default",
+				"navigationBarBackgroundColor": "#01a4ff",
+				"navigationBarTextStyle": "white"
+			}
+
+		}
+	    ,{
+            "path" : "pages/mine/article/article",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true,
+				"onReachBottomDistance":500
+            }
+            
+        },{
+            "path" : "pages/project/project",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true,
+				"onReachBottomDistance":500
+            }
+            
+        }
+        ,{
+            "path" : "pages/public/public",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/square/square",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#007AFF",
+		"list": [{
+				// "pagePath": "pages/index/index",
+				"pagePath": "pages/search/search",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/square/square",
+				"text": "广场"
+			},
+			{
+				"pagePath": "pages/public/public",
+				"text": "公众号"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "体系"
+			},
+			{
+				"pagePath": "pages/project/project",
+				"text": "项目"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationStyle": "custom"
+	}
+}
