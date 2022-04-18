@@ -15,7 +15,10 @@ App.mpType = 'app'
 import uView from 'uview-ui';
 Vue.use(uView);
 
+import backTop from 'component/toTop/toTop.vue';
+
 const app = new Vue({
     ...App
 })
 app.$mount()
+Vue.component('backTop', backTop) //注册backTop组件为全局组件

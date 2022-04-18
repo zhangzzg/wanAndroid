@@ -18,7 +18,7 @@
 			</view>
 			<view class="line"></view>
 		</view>
-		<uni-fab  horizontal="right" vertical="bottom" @fabClick="fabClick"></uni-fab>
+		<backTop />
 	</view>
 </template>
 
@@ -35,6 +35,12 @@
 		},
 		onLoad() {
 			this.getWxarticleItemData()
+			uni.$on("backtop",function(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
+				});
+			})
 		},
 		onPullDownRefresh() {
 			this.page = 0

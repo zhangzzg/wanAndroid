@@ -91,27 +91,37 @@
     ],
 	"tabBar": {
 		"color": "#999999",
-		"selectedColor": "#007AFF",
+		"selectedColor": "#DD524D",
 		"list": [{
 				// "pagePath": "pages/index/index",
 				"pagePath": "pages/search/search",
-				"text": "首页"
+				"text": "首页",
+				"iconPath":"static/tabbarIcon/home.png",
+				"selectedIconPath":"static/tabbarIcon/home_selected.png"
 			},
 			{
 				"pagePath": "pages/square/square",
-				"text": "广场"
+				"text": "广场",
+				"iconPath":"static/tabbarIcon/nav.png",
+				"selectedIconPath":"static/tabbarIcon/nav_selected.png"
 			},
 			{
 				"pagePath": "pages/public/public",
-				"text": "公众号"
+				"text": "公众号",
+				"iconPath":"static/tabbarIcon/account.png",
+				"selectedIconPath":"static/tabbarIcon/account_selected.png"
 			},
 			{
 				"pagePath": "pages/mine/mine",
-				"text": "体系"
+				"text": "体系",
+				"iconPath":"./static/tabbarIcon/system.png",
+				"selectedIconPath":"static/tabbarIcon/system_selected.png"
 			},
 			{
 				"pagePath": "pages/project/project",
-				"text": "项目"
+				"text": "项目",
+				"iconPath":"./static/tabbarIcon/project.png",
+				"selectedIconPath":"static/tabbarIcon/project_selected.png"
 			}
 		]
 	},

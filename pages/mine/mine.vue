@@ -1,7 +1,6 @@
 <template>
 	<view>
-		 <u-search :show-action="false" shape="square" height="80" disabled 
-		  placeholder="体系" @click="search"  ></u-search>
+		 <!-- <u-search :show-action="false" shape="square" height="80" disabled  placeholder="体系" @click="search"  ></u-search> -->
 		 <view class="tabs">
 			<u-tabs  bg-color="#fafafa" :bold="bold" active-color="#01a4ff" :list="tabs"
 			@change="change" :current="current"  :offset="offset" ></u-tabs>
@@ -14,7 +13,7 @@
 			</view>
 			<view class="line"></view>
 		</view>
-		<!-- <uni-fab  horizontal="right" vertical="bottom" @fabClick="fabClick"></uni-fab> -->
+		<backTop></backTop>
 	</view>
 </template>
 <script>
@@ -39,6 +38,12 @@
 		},
 		onLoad() {
 			this.getTreeData()
+			uni.$on("backtop",function(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
+				});
+			})
 		},
 		methods: {
 			search(){

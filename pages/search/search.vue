@@ -1,12 +1,18 @@
 <template>
 	<view>
-		<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000">
+		<view class="banner">
+		<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000" style="height: 200px;">
 			<swiper-item v-for="(item,index) in images" :key=index @click="imageClick(item)">
 				<view>
 					<image :src="item.imagePath" style="width: 750rpx;"></image>
 				</view>
 			</swiper-item>
 		</swiper>
+		<view class="tabindex">
+			<view v-html="images[nowIndex-1].title"></view>
+			<view>{{nowIndex}}/{{images.length}}</view>
+		</view>
+		</view>
 		<!-- 列表数据 -->
 		<view>
 			<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
@@ -27,7 +33,7 @@
 						<view class="bottom">
 							<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
 							<view @click.stop ="favClick">
-								<uni-fav :checked= "item.collect"/>
+								<uni-fav :checked= "item.collect"  star="false"/>
 							</view>
 						</view>
 					</view>
@@ -35,24 +41,30 @@
 				<view class="line"></view>
 			</view>
 		</view>
-		<uni-fab  horizontal="right" vertical="bottom" @fabClick="fabClick"></uni-fab>
+		<backTop></backTop>
 	</view>
 </template>
 <script>
-	import cpn from '@/component/cpn.vue';
 	export default {
 		data() {
 			return {
 				images: [],
 				totalData: [],
 				resTop:[],
-				page: 0
+				page: 0,
+				nowIndex: 1,
 			}
 		},
 		onLoad() {
 			this.getBanner()
 			this.getTopData()
 			this.getHomeData()
+			uni.$on("backtop",function(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
+				});
+			})
 		},
 		onPullDownRefresh() {
 			console.log("下拉刷新")
@@ -70,14 +82,10 @@
 					url:"./detail/detail?link="+item.url+"&&title="+item.title
 				})
 			},
+			
 			actionDetail(item){
 				uni.navigateTo({
 					url:"./detail/detail?link="+item.link+"&&title="+item.title
-				})
-			},
-			fabClick(){
-				uni.pageScrollTo({
-					scrollTop:0
 				})
 			},
 			
@@ -122,13 +130,26 @@
 				console.log("getParenData")
 			}
 		},
-		components: {
-			cpn
-		}
 	}
 </script>
 
 <style lang="scss">
+	.banner{
+		position: relative;
+		.tabindex{
+			position: absolute;
+			bottom: 0;
+			height: 24px;
+			background: rgba(0,0,0,0.4);
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			padding: 0 20px;
+			align-items: center;
+			color: #fff;
+			font-size: 28rpx;
+		}
+	}
 	.list-item {
 		display: flex;
 		margin-top: 15rpx;
@@ -184,11 +205,13 @@
 				.title {
 					margin-right: 15rpx;
 					font-size: 30rpx;
+					margin-top: 10px;
 				}
                 .bottom{
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+					margin-top: 10px;
 					.noted {
 						font-size: 15rpx;
 						margin-top: 15rpx;
