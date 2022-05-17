@@ -2,12 +2,14 @@ import Vue from 'vue'
 import App from './App'
 import {myHttp,myInterceptor,myWebHttp } from './utils/api.js'
 import myConstan from './utils/const.js'
+import comUtils from '@/utils/common_utils.js'
 
 Vue.config.productionTip = false
 Vue.prototype.$myHttp = myHttp
 Vue.prototype.$myWebHttp = myWebHttp
 Vue.prototype.$interceptor = myInterceptor
 Vue.prototype.$myConstan = myConstan
+Vue.prototype.$comUtils = comUtils
 
 App.mpType = 'app'
 

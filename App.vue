@@ -15,10 +15,18 @@
 
 <style lang="scss">
 	 @import "uview-ui/index.scss";
+	 @import url("common/iconfont/iconfont.css");
 	/*每个页面公共css */
 	.line {
 		width: 750rpx;
 		height: 1px;
 		background-color: #DCDFE6;
+	}
+	.collect_status{
+		/* color: deeppink; */
+		font-size: 16px;
+	}
+	.collec_true{
+		color: $uni-color-primary;
 	}
 </style>

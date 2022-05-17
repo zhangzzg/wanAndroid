@@ -4,7 +4,7 @@
 			statusBar=true />
 		<view class="tabs">
 			<u-tabs bg-color="#fafafa" :bold="bold" active-color="#01a4ff" :list="tabs" @change="change"
-				:current="current" ></u-tabs>
+				:current="current" bar-height="0" ></u-tabs>
 		</view>
 		
 		<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
@@ -16,13 +16,10 @@
 			<text class="title">{{item.title}}</text>
 			<view class="bottom">
 				<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
-				<!-- <view @click.stop ="favClick">
-					<uni-fav :checked= "item.collect"/>
-				</view> -->
 			</view>
 			<view class="line"></view>
 		</view>
-		<!-- <uni-fab  horizontal="right" vertical="bottom" @fabClick="fabClick"></uni-fab> -->
+			<backTop></backTop>
 	</view>
 </template>
 
@@ -57,6 +54,12 @@
 			console.log("tabs1: ", tabs1)
 			this.tabs = tabs1
 			this.getArticle()
+			uni.$on("backtop",function(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
+				});
+			})
 		},
 		methods: {
 			fabClick(){
@@ -126,14 +129,14 @@
 			.author {
 				margin-right: 15rpx;
 				margin-left: 15rpx;
-				color: #333333;
+				color: #999999;
 			}
 	
 			.time {
 				display: flex;
 				justify-content: flex-end;
 				margin-right: 15rpx;
-				color: #333333;
+				color: #999999;
 				flex: 1;
 			}
 		}
@@ -141,11 +144,11 @@
 	
 	.title {
 		margin: 20rpx;
-		color: #01a4ff;
+		color: #333333;
 	}
 	.bottom{
 		margin-left: 20rpx;
 		margin-bottom: 20rpx;
-		color: #19BE6B;
+		color: #999999;
 	}	
 </style>

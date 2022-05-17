@@ -3,9 +3,8 @@
 		<uni-nav-bar title="项目" backgroundColor="#01a4ff" color="#fff" statusBar=true  />
 		<view class="tabs">
 			<u-tabs bg-color="#fafafa" :bold="bold" :active-color="activeColor" :list="tabs" @change="change"
-				:current="current" :offset="offset"></u-tabs>
+				:current="current" :offset="offset" bar-width="0"></u-tabs>
 		</view>
-		<!-- <u-tabs-swiper></u-tabs-swiper> -->
 		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			<view class="item">
 				<image class="image" :src="item.envelopePic" mode="aspectFit"></image>
@@ -69,11 +68,13 @@
 					url: "../search/detail/detail?link=" + item.link + "&&title=" + item.title
 				})
 			},
+			
 			fabClick() {
 				uni.pageScrollTo({
 					scrollTop: 0
 				})
 			},
+			
 			change(index) {
 				if (this.current != index) {
 					this.page = 1
@@ -145,7 +146,7 @@
 
 				.desc {
 					font-size: 12px;
-					color: #19BE6B;
+					color: #666666;
 					lines: 1;
 					text-overflow: ellipsis;
 				}

@@ -12,9 +12,7 @@
 			<text class="des">{{item.title}}</text>
 			<view class="bottom">
 				<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
-				<view class="fav" @click.stop="favClick">
-					<uni-fav :checked="item.collect" />
-				</view>
+				<view @click.stop="favClick(item)" :class="['collect_status','iconfont','icon-collection', item.collect ? 'collec_true' : '']"/>
 			</view>
 			<view class="line"></view>
 		</view>
@@ -62,8 +60,42 @@
 					url:"../search/detail/detail?link="+item.link+"&&title="+item.title
 				})
 			},
-			favClick(){
-				console.log("收藏")
+			async favClick(item) {
+				if(!this.$comUtils.isLogin()){
+					uni.navigateTo({
+						url: '/pages/login/login'
+					})
+				}else{
+					if(item.collect){
+						const res = await this.$myWebHttp({
+							url: "lg/uncollect_originId/" + item.id + "/json",
+							method:'POST'
+						})
+						if(res.data.errorCode == 0){
+							item.collect = false
+						}else{
+							uni.showToast({
+							    title: '取消收藏失败'+res.data.errorMsg,
+							    duration: 2000,
+								position:"bottom"
+							});
+						}
+					}else{
+						const res = await this.$myWebHttp({
+							url: "lg/collect/"+item.id+"/json",
+							method:'POST'
+						})
+						if(res.data.errorCode == 0){
+							item.collect = true
+						}else{
+							uni.showToast({
+							    title: '收藏失败'+res.data.errorMsg,
+							    duration: 2000,
+								position:"bottom"
+							});
+						}
+					}
+				}
 			},
 			async getWxarticleItemData() {
 				const res = await this.$myWebHttp({

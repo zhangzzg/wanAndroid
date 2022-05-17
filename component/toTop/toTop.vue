@@ -8,11 +8,6 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				
-			};
-		},
 		methods:{
 			toTop(){
 				uni.$emit('backtop')

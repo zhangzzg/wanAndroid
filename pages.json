@@ -88,12 +88,56 @@
             }
             
         }
+        ,{
+            "path" : "pages/search/searchdetail/searchdetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/search/searchdetail/hotarticle/hotarticle",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/collect/collect",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#999999",
 		"selectedColor": "#DD524D",
 		"list": [{
-				// "pagePath": "pages/index/index",
 				"pagePath": "pages/search/search",
 				"text": "首页",
 				"iconPath":"static/tabbarIcon/home.png",
@@ -102,8 +146,8 @@
 			{
 				"pagePath": "pages/square/square",
 				"text": "广场",
-				"iconPath":"static/tabbarIcon/nav.png",
-				"selectedIconPath":"static/tabbarIcon/nav_selected.png"
+				"iconPath":"./static/tabbarIcon/system.png",
+				"selectedIconPath":"static/tabbarIcon/system_selected.png"
 			},
 			{
 				"pagePath": "pages/public/public",
@@ -113,9 +157,9 @@
 			},
 			{
 				"pagePath": "pages/mine/mine",
-				"text": "体系",
-				"iconPath":"./static/tabbarIcon/system.png",
-				"selectedIconPath":"static/tabbarIcon/system_selected.png"
+				"text": "导航",
+				"iconPath":"static/tabbarIcon/nav.png",
+				"selectedIconPath":"static/tabbarIcon/nav_selected.png"
 			},
 			{
 				"pagePath": "pages/project/project",

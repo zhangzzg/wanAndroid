@@ -1,4 +1,3 @@
-// const BASE_URL = "http://api.mis.danjuantaxi.com"
 const BASE_URL = "https://api.caiyunapp.com/"
 const BASE_URL_ = "https://www.wanandroid.com/"
 export const myHttp = (option)=>{
@@ -26,6 +25,7 @@ export const myWebHttp = (option)=>{
 			url:BASE_URL_ + option.url,
 			method:option.method || 'GET',
 			data:option.data || {},
+			header:option.header || {},
 			success: (res) => {
 				resolve(res)
 			},
