@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<view class="status_bar"></view>
 		<view class="header">
 			<image class="header_avart" :src="bgImg" @click="showDrawer('showLeft')"></image>
 			<view class="header_content">玩安卓</view>

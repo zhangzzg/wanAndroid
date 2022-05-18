@@ -1,8 +1,9 @@
 <template>
 	<view>
+		<view class="status_bar"></view>
 		<view class="tabs">
-			<u-tabs bg-color="#fafafa" :bold="bold" active-color="#01a4ff" :list="tabs" @change="change"
-				:current="current" :offset="offset"></u-tabs>
+			<u-tabs bg-color="#01a4ff" :bold="bold"  active-color="#ffffff" inactive-color="#f8f8f8" :list="tabs" @change="change"
+				:current="current" :offset="offset" ></u-tabs>
 		</view>
          <view v-if="current == 1">
 			 <view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">

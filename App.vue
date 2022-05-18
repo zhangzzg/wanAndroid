@@ -29,4 +29,9 @@
 	.collec_true{
 		color: $uni-color-primary;
 	}
+	.status_bar{
+		height: var(--status-bar-height);
+		width: 100%;
+		background-color: $uni-color-primary;
+	}
 </style>
