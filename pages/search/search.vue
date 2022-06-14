@@ -7,7 +7,8 @@
 			<image class="header_search" src="../../static/search.png" mode="aspectFit" @click="search"></image>
 		</view>
 		<view class="banner">
-			<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000" style="height: 200px;">
+			<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000" style="height: 200px;"
+				@change='changeSwiper'>
 				<swiper-item v-for="(item,index) in images" :key=index @click="imageClick(item)">
 					<view>
 						<image :src="item.imagePath" style="width: 750rpx;"></image>
@@ -15,7 +16,7 @@
 				</swiper-item>
 			</swiper>
 			<view class="tabindex">
-				<view v-html="images[nowIndex-1].title"></view>
+				<view v-if="images != null && images.length > 0" v-html="images[nowIndex-1].title"></view>
 				<view>{{nowIndex}}/{{images.length}}</view>
 			</view>
 		</view>
@@ -56,7 +57,8 @@
 						<text class="title">{{item.title}}</text>
 						<view class="bottom">
 							<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
-							<view @click.stop="favClick(item)" :class="['collect_status','iconfont','icon-collection', item.collect ? 'collec_true' : '']"/>
+							<view @click.stop="favClick(item)"
+								:class="['collect_status','iconfont','icon-collection', item.collect ? 'collec_true' : '']" />
 						</view>
 					</view>
 				</view>
@@ -79,7 +81,7 @@
 				page: 0,
 				nowIndex: 1,
 				username: "登录",
-				bgImg: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3209370120,2008812818&fm=26&gp=0.jpg',
+				bgImg: '../../static/login_icon.jpg',
 			}
 		},
 		onLoad() {
@@ -98,7 +100,7 @@
 					this.username = res.data
 				}
 			})
-			uni.$on("login",()=>{
+			uni.$on("login", () => {
 				uni.getStorage({
 					key: "username",
 					success: (res) => {
@@ -122,7 +124,7 @@
 		},
 		methods: {
 			login() {
-				if(!this.$comUtils.isLogin()){
+				if (!this.$comUtils.isLogin()) {
 					uni.navigateTo({
 						url: '/pages/login/login'
 					})
@@ -131,7 +133,7 @@
 				// 	url: '/pages/login/login',
 				// 	events:{
 				// 		// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-                //        acceptDataFromOpenedPage(data){
+				//        acceptDataFromOpenedPage(data){
 				// 			console.log("acceptDataFromOpenedPage: ",data)
 				// 		},
 				// 		someEvent(data){
@@ -141,7 +143,10 @@
 				// 	success: (res) => {
 				// 		 res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'data from starter page' })
 				// 	}
-				
+
+			},
+			changeSwiper(e) {
+				this.nowIndex = e.detail.current + 1;
 			},
 			drawerClick(item, index) {
 				switch (item.title) {
@@ -151,16 +156,21 @@
 						})
 						break;
 					case "我的收藏":
-					if(!this.$comUtils.isLogin()){
+						if (!this.$comUtils.isLogin()) {
+							uni.navigateTo({
+								url: '/pages/login/login'
+							})
+						} else {
+							uni.navigateTo({
+								url: "/pages/collect/collect"
+							})
+						}
+						break;
+					case "我的文章":
 						uni.navigateTo({
-							url: '/pages/login/login'
+							url: "/pages/test/test"
 						})
-					}else{
-						uni.navigateTo({
-							url: "/pages/collect/collect"
-						})
-					}
-					break;	
+						break;
 					case "退出登录":
 						uni.showModal({
 							title: '提示',
@@ -181,24 +191,24 @@
 				const res = await this.$myWebHttp({
 					url: "user/logout/json",
 				})
-				if(res.data.errorCode == 0){
+				if (res.data.errorCode == 0) {
 					uni.removeStorage({
-						key:"username",
+						key: "username",
 						success: () => {
 							console.log("移除成功")
 							this.username = "登录"
 						}
 					})
 					uni.showToast({
-						title:"退出登录成功",
-						position:"bottom",
-						icon:"none"
+						title: "退出登录成功",
+						position: "bottom",
+						icon: "none"
 					})
-				}else{
+				} else {
 					uni.showToast({
-						title:res.data.errorMsg,
-						position:"bottom",
-						icon:"none"
+						title: res.data.errorMsg,
+						position: "bottom",
+						icon: "none"
 					})
 				}
 			},
@@ -228,37 +238,38 @@
 			},
 
 			async favClick(item) {
-				if(!this.$comUtils.isLogin()){
+				let isLogin = this.$comUtils.isLogin()
+				if (!isLogin) {
 					uni.navigateTo({
 						url: '/pages/login/login'
 					})
-				}else{
-					if(item.collect){
+				} else {
+					if (item.collect) {
 						const res = await this.$myWebHttp({
 							url: "lg/uncollect_originId/" + item.id + "/json",
-							method:'POST'
+							method: 'POST'
 						})
-						if(res.data.errorCode == 0){
+						if (res.data.errorCode == 0) {
 							item.collect = false
-						}else{
+						} else {
 							uni.showToast({
-							    title: '取消收藏失败'+res.data.errorMsg,
-							    duration: 2000,
-								position:"bottom"
+								title: '取消收藏失败' + res.data.errorMsg,
+								duration: 2000,
+								position: "bottom"
 							});
 						}
-					}else{
+					} else {
 						const res = await this.$myWebHttp({
-							url: "lg/collect/"+item.id+"/json",
-							method:'POST'
+							url: "lg/collect/" + item.id + "/json",
+							method: 'POST'
 						})
-						if(res.data.errorCode == 0){
+						if (res.data.errorCode == 0) {
 							item.collect = true
-						}else{
+						} else {
 							uni.showToast({
-							    title: '收藏失败'+res.data.errorMsg,
-							    duration: 2000,
-								position:"bottom"
+								title: '收藏失败' + res.data.errorMsg,
+								duration: 2000,
+								position: "bottom"
 							});
 						}
 					}
