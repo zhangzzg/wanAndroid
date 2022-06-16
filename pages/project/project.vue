@@ -13,7 +13,7 @@
 						<text class="title">{{item.title}}</text>
 					</view>
 					<view>
-						<text class="desc">{{item.desc.substring(0,20)}}</text>
+						<!-- <text class="desc">{{item.desc.substring(0,50)}}</text> -->
 					</view>
 					<view class="time">
 						<text class="title">{{item.author}}</text>
@@ -121,7 +121,7 @@
 			flex-direction: row;
 
 			.image {
-				width: 130rpx;
+				flex: 1;
 				height: 170rpx;
 				margin-top: 20rpx;
 				margin-bottom: 20rpx;
@@ -131,11 +131,10 @@
 			}
 
 			.conten {
-				flex: 1;
+				flex: 4;
 				display: flex;
 				flex-direction: column;
 				justify-content: space-around;
-
 				.title {
 					font-size: 30rpx;
 					color: #333333;
@@ -145,10 +144,16 @@
 				}
 
 				.desc {
-					font-size: 12px;
-					color: #666666;
-					lines: 1;
-					text-overflow: ellipsis;
+					// font-size: 24rpx;
+					// color: #999999;
+					// lines: 1;
+					// text-overflow: ellipsis;
+					
+					font-size: 8px;
+					color: #999;
+					/* font-weight: bold; */
+					lines: 3;
+					text-overflow:ellipsis; 
 				}
 
 				.time {

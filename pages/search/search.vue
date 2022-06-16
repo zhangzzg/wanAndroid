@@ -171,6 +171,21 @@
 							url: "/pages/test/test"
 						})
 						break;
+					case "常用网站":
+					    console.log("进入")
+						uni.navigateTo({
+							url: "/pages/test/dis",
+							success: () => {
+								console.log("成功")
+							}   ,
+							fail: (err) => {
+								console.log("错误： "+err)
+							}
+						})
+						break;
+					case "关于作者":
+						
+						break;			
 					case "退出登录":
 						uni.showModal({
 							title: '提示',

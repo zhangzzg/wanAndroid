@@ -42,7 +42,7 @@
 		},
 		onPullDownRefresh() {
 			this.page = 0
-			this.getWxarticleItemData()
+			this.getWxarticleItemData() 
 		},
 		onReachBottom() {
 			this.page ++
@@ -101,6 +101,7 @@
 				const res = await this.$myWebHttp({
 					url: "user_article/list/" + this.page + "/json",
 				})
+				uni.stopPullDownRefresh()
 				console.log("广场数据:", res.data.data.datas)
 				if(this.page == 0){
 					this.totalData = res.data.data.datas
