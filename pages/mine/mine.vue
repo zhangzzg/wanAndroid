@@ -1,10 +1,7 @@
 <template>
 	<view>
 		<view class="status_bar"></view>
-		<view class="tabs">
-			<u-tabs bg-color="#01a4ff" :bold="bold"  active-color="#ffffff" inactive-color="#f8f8f8" :list="tabs" @change="change"
-				:current="current" :offset="offset" ></u-tabs>
-		</view>
+		<my-tabs :tabs=tabs></my-tabs>
          <view v-if="current == 1">
 			 <view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			 	<text class="title">{{item.name}}</text>
@@ -61,6 +58,9 @@
 					duration: 300
 				});
 			})
+			uni.$on("click",(item)=>{
+				this.change(item)
+			})
 		},
 		components:{
 			easyScroll
@@ -82,7 +82,8 @@
 					scrollTop: 0
 				})
 			},
-			change(index) {
+			change(item) {
+				let index = item.index
 				this.current = index;
 				switch (index) {
 					case 1:

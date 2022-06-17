@@ -1,11 +1,11 @@
 {
-	"easycom": {
-		// npm安装的方式不需要前面的"@/"，下载安装的方式需要"@/"
-		// npm安装方式
-		// "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
-		// 下载安装方式
-		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-	},
+	// "easycom": {
+	// 	// npm安装的方式不需要前面的"@/"，下载安装的方式需要"@/"
+	// 	// npm安装方式
+	// 	// "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	// 	// 下载安装方式
+	// 	"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	// },
 	"pages": [
 		{
 			"path": "pages/search/search",
@@ -135,24 +135,6 @@
         }
         ,{
             "path" : "pages/test/test",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/test/refresh/refresh",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/test/dis",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

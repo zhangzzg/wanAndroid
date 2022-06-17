@@ -14,13 +14,14 @@ Vue.prototype.$comUtils = comUtils
 App.mpType = 'app'
 
 // 引入全局uView
-import uView from 'uview-ui';
+import uView from '@/uni_modules/uview-ui'
 Vue.use(uView);
 
 import backTop from 'component/toTop/toTop.vue';
-
+import mytabs from 'component/mytabs.vue'
 const app = new Vue({
     ...App
 })
 app.$mount()
 Vue.component('backTop', backTop) //注册backTop组件为全局组件
+Vue.component('my-tabs', mytabs) //注册backTop组件为全局组件

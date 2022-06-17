@@ -30,6 +30,7 @@ export const myWebHttp = (option)=>{
 				resolve(res)
 			},
 			fail: (err) => {
+				console.log("请求失败错误: ",err)
 				uni.showToast({
 					title:"请求失败"
 				})

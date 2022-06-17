@@ -1,10 +1,7 @@
 <template>
 	<view>
 		<uni-nav-bar title="项目" backgroundColor="#01a4ff" color="#fff" statusBar=true  />
-		<view class="tabs">
-			<u-tabs bg-color="#fafafa" :bold="bold" :active-color="activeColor" :list="tabs" @change="change"
-				:current="current" :offset="offset" bar-width="0"></u-tabs>
-		</view>
+		<my-tabs :tabs=tabs></my-tabs>
 		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			<view class="item">
 				<image class="image" :src="item.envelopePic" mode="aspectFit"></image>
@@ -36,7 +33,6 @@
 				tabs: [],
 				totalData: [],
 				current: 0,
-				activeColor: this.$u.color['primary'],
 				bold: true,
 				offset: [5, -5],
 				cid: 0,
@@ -55,6 +51,9 @@
 					scrollTop: 0,
 					duration: 300
 				});
+			})
+			uni.$on("click",(item)=>{
+				this.change(item)
 			})
 		},
 		onReachBottom() {
@@ -75,7 +74,8 @@
 				})
 			},
 			
-			change(index) {
+			change(item) {
+				let index = item.index
 				if (this.current != index) {
 					this.page = 1
 				}

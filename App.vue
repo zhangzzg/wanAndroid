@@ -14,7 +14,7 @@
 </script>
 
 <style lang="scss">
-	 @import "uview-ui/index.scss";
+	 @import "@/uni_modules/uview-ui/index.scss";
 	 @import url("common/iconfont/iconfont.css");
 	/*每个页面公共css */
 	.line {
@@ -31,7 +31,7 @@
 	}
 	.status_bar{
 		height: var(--status-bar-height);
-		width: 100%;
+		width: 750rpx;
 		background-color: $uni-color-primary;
 	}
 </style>
