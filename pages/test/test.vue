@@ -2,12 +2,13 @@
 	<view>
 		<view class="tabs">
 			<uni-nav-bar title="公众号" backgroundColor="#01a4ff" color="#fff" statusBar=true />
-			<my-tabs :tabs=tabs :current= current></my-tabs>
+			<my-tabs :tabs="tabs" :current="current"></my-tabs>
 		</view>
 		<swiper :current="tabIndex" :duration="300" @change="onswiperchange" style="height: 100vh;">
 			<swiper-item v-for="(sitem, index) in tabs" :key="sitem.id">
 				<u-list :enableBackToTop="true" :scrollTop="scrollTop" @scrolltolower="scrolltolower">
-					<u-list-item class="list-item" v-for="(item,index) in totalData" :key=index @click="itemClick(item)">
+					<u-list-item class="list-item" v-for="(item,index) in totalData" :key=index
+						@click="itemClick(item)">
 						<view class="title">
 							<text class="text">{{item.author}}</text>
 							<text class="text">{{item.niceDate}}</text>
@@ -23,7 +24,7 @@
 				</u-list>
 			</swiper-item>
 		</swiper>
-		<backTop></backTop>
+		<backTop  @backtop="goTop"></backTop>
 	</view>
 </template>
 
@@ -50,19 +51,14 @@
 			console.log("onLoad")
 			this.getWxarticle()
 			this.getWxarticleItemData()
-			uni.$on('backtop', () => {
-				this.goTop()
-			})
-			uni.$on("click",(item)=>{
+			uni.$on("click", (item) => {
 				this.change(item)
 			})
 		},
 		methods: {
 			goTop() {
-				 uni.pageScrollTo({
-				 	scrollTop: 0,
-					duration: 300
-				 });
+				console.log("---goTop---")
+				this.scrollTop = 0
 			},
 			scrolltolower() {
 				this.page++

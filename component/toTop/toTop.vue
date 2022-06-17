@@ -10,7 +10,7 @@
 	export default {
 		methods:{
 			toTop(){
-				uni.$emit('backtop')
+				this.$emit('backtop')
 			}
 		}
 	}
