@@ -2,11 +2,8 @@
 	<view>
 		<uni-nav-bar leftIcon="back" @clickLeft="backAction" :title="name" backgroundColor="#01a4ff" color="#fff"
 			statusBar=true />
-		<view class="tabs">
-			<u-tabs bg-color="#fafafa" :bold="bold" active-color="#01a4ff" :list="tabs" @change="change"
-				:current="current" bar-height="0" ></u-tabs>
-		</view>
-		
+	
+		<my-tabs :tabs="tabs"></my-tabs>
 		<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
 			<view class="list-title">
 				<text class="author" v-if="item.author.length >0 ">{{item.author}}</text>
@@ -32,9 +29,7 @@
 				name: "",
 				tabs: [],
 				current: 0,
-				activeColor: this.$u.color['primary'],
 				bold: true,
-				// offset: [5, -5]
 				totalData:[]
 			}
 		},
@@ -91,11 +86,6 @@
 					this.totalData = res.data.data.datas
 				}else{
 					this.totalData = this.totalData.concat(res.data.data.datas)
-					// if(res.data.data.datas != null && res.data.data.datas.length > 0){
-					// 	this.totalData = this.totalData.concat(res.data.data.datas)
-					// }else{
-					// 	console.log("没有更多了")
-					// }
 				}
 			}
 		}

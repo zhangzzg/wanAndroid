@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<view class="status_bar"></view>
-		<my-tabs :tabs=tabs></my-tabs>
+		<my-tabs :tabs="tabs"></my-tabs>
          <view v-if="current == 1">
 			 <view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			 	<text class="title">{{item.name}}</text>
 			 	<view class="content">
-			 		<text class="label" v-for="(sitem,index) in item.children" :key=index>{{sitem.name}}</text>
+			 		<text class="label" v-for="(sitem,index) in item.children" :key="index">{{sitem.name}}</text>
 			 	</view>
 			 	<view class="line"></view>
 			 </view>

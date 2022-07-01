@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-nav-bar title="项目" backgroundColor="#01a4ff" color="#fff" statusBar=true  />
-		<my-tabs :tabs=tabs></my-tabs>
+		<my-tabs :tabs="tabs"></my-tabs>
 		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			<view class="item">
 				<image class="image" :src="item.envelopePic" mode="aspectFit"></image>

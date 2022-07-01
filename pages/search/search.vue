@@ -218,7 +218,8 @@
 			},
 			// 打开窗口
 			showDrawer(e) {
-				this.$refs[e].open()
+				// this.$refs[e].open()
+				this.$refs.showLeft.open()
 			},
 			closeDrawer(e) {
 				this.$refs[e].close()

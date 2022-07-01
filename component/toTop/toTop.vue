@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="toTop" @click="toTop">
-			<image src="../../static/toTop.png" mode=""></image>
+			<image src="../../static/toTop.png"></image>
 		</view>
 	</view>
 </template>
@@ -10,7 +10,8 @@
 	export default {
 		methods:{
 			toTop(){
-				this.$emit('backtop')
+				// this.$emit('backtop')
+				uni.$emit('backtop')
 			}
 		}
 	}
