@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="status_bar"></view>
-		<my-tabs :tabs="tabs"></my-tabs>
+		<my-tabs :tabs="tabs" @click="change"></my-tabs>
          <view v-if="current == 1">
 			 <view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			 	<text class="title">{{item.name}}</text>
@@ -57,9 +57,6 @@
 					scrollTop: 0,
 					duration: 300
 				});
-			})
-			uni.$on("click",(item)=>{
-				this.change(item)
 			})
 		},
 		components:{

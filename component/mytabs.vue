@@ -26,7 +26,8 @@
 		},
 		methods:{
 			click(item){
-				uni.$emit('click',item)
+				// uni.$emit('click',item)
+				this.$emit("click",item)
 			}
 		}
 	}

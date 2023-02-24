@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-nav-bar title="公众号" backgroundColor="#01a4ff" color="#fff" statusBar=true />
-		<my-tabs :tabs="tabs"></my-tabs>
+		<my-tabs :tabs="tabs" @click="change"></my-tabs>
 		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			<view class="title">
 				<text class="text">{{item.author}}</text>
@@ -40,9 +40,6 @@
 					scrollTop: 0,
 					duration: 300
 				});
-			})
-			uni.$on("click",(item)=>{
-				this.change(item)
 			})
 		},
 		onPullDownRefresh() {
