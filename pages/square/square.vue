@@ -1,22 +1,24 @@
 <template>
 	<view>
-		<uni-nav-bar title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
-		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
-			<view class="title">
-				<view >
-					<text class="label" v-show="item.fresh">新</text>
-					<text class="text">{{item.shareUser}}</text>
+		<uni-nav-bar class="header-main"  title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<view style="margin-top: 160rpx;">
+			<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
+				<view class="title">
+					<view >
+						<text class="label" v-show="item.fresh">新</text>
+						<text class="text">{{item.shareUser}}</text>
+					</view>
+					<text class="text">{{item.niceDate}}</text>
 				</view>
-				<text class="text">{{item.niceDate}}</text>
+				<text class="des">{{item.title}}</text>
+				<view class="bottom">
+					<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
+					<view @click.stop="favClick(item)" :class="['collect_status','iconfont','icon-collection', item.collect ? 'collec_true' : '']"/>
+				</view>
+				<view class="line"></view>
 			</view>
-			<text class="des">{{item.title}}</text>
-			<view class="bottom">
-				<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
-				<view @click.stop="favClick(item)" :class="['collect_status','iconfont','icon-collection', item.collect ? 'collec_true' : '']"/>
-			</view>
-			<view class="line"></view>
+			<backTop />
 		</view>
-		<backTop />
 	</view>
 </template>
 
@@ -114,6 +116,11 @@
 </script>
 
 <style lang="scss">
+	.header-main{
+		width: 100%;
+	    position: fixed;
+	    top:0;
+	}
 	.list-item {
 		display: flex;
 		flex-direction: column;

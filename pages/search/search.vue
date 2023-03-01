@@ -383,7 +383,6 @@
 		background-color: #01a4ff;
 		height: 100rpx;
 		text-align: center;
-
 		.header_avart {
 			color: #FFFFFF;
 			width: 45px;
@@ -395,7 +394,8 @@
 
 		.header_content {
 			color: #FFFFFF;
-			font-size: 32rpx;
+			padding: 10px;
+			font-size: 40rpx;
 		}
 
 		.header_search {
@@ -408,7 +408,6 @@
 
 	.banner {
 		position: relative;
-
 		.tabindex {
 			position: absolute;
 			bottom: 0;
