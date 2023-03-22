@@ -2,26 +2,26 @@
 	<view>
 		<uni-nav-bar leftIcon="back" @clickLeft="backAction" :title="name" backgroundColor="#01a4ff" color="#fff"
 			statusBar=true />
-	
-		<my-tabs :tabs="tabs"></my-tabs>
-		<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
-			<view class="list-title">
-				<text class="author" v-if="item.author.length >0 ">{{item.author}}</text>
-				<text class="author" v-else>{{item.shareUser}}</text>
-				<text class="time">{{item.niceDate}}</text>
-			</view>
-			<text class="title">{{item.title}}</text>
-			<view class="bottom">
-				<text class="noted">{{item.superChapterName}}/{{item.chapterName}}</text>
-			</view>
-			<view class="line"></view>
-		</view>
-			<backTop></backTop>
+		<my-tabs :tabs="tabs" :current="current"></my-tabs>
+		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
+			@change="changeSwiper">
+			<swiper-item class="tab-body" v-for="(type, index) in tabs" :key="index">
+				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
+					@scrolltolower="onreachBottom(index)">
+					<myarticle :id="type.id"></myarticle>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
+		<backTop ></backTop>
 	</view>
 </template>
 
 <script>
+	import myarticle from "../../../component/myarticle.vue"
 	export default {
+		components:{
+			myarticle
+		},
 		data() {
 			return {
 				cid: 0,
@@ -30,37 +30,48 @@
 				tabs: [],
 				current: 0,
 				bold: true,
-				totalData:[]
+				totalData:[],
+				scrollTop: 0,
+				swiperH: 0,
+				duration: 500,
+				old: {
+					scrollTop: 0
+				}
 			}
 		},
-		onPullDownRefresh() {
-			this.page = 0
-			this.getArticle()
-		},
-		onReachBottom() {
-			this.page++
-			this.getArticle()
-		},
 		onLoad(option) {
+			let that = this
 			this.cid = option.uid
 			this.name = option.title
+			// 初始化swiper高度
+			let tabH = uni.upx2px(220); //80rpx转换px
+			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
 			let obj = option.children.replace("\"([^\"]*)\"", "$1");
 			let tabs1 = JSON.parse(obj)
 			console.log("tabs1: ", tabs1)
 			this.tabs = tabs1
 			this.getArticle()
 			uni.$on("backtop",function(){
-				uni.pageScrollTo({
-				    scrollTop: 0,
-				    duration: 300
+				// 解决view层不同步的问题
+				that.scrollTop = that.old.scrollTop
+				that.$nextTick(function() {
+					that.scrollTop = 0
 				});
 			})
 		},
 		methods: {
-			fabClick(){
-				uni.pageScrollTo({
-					scrollTop:0
-				})
+			onreachBottom(index) {
+				setTimeout(function () {
+				    uni.$emit("loadMoreArticle")
+				}, 800);
+			},
+			scroll: function(e) {
+				this.old.scrollTop = e.detail.scrollTop
+			},
+			changeSwiper(event) {
+				let index = event.detail.current;
+				this.current = index;
+				console.log("changeSwiper切换获取cid: ", this.cid)
 			},
 			actionDetail(item){
 				uni.navigateTo({
@@ -68,11 +79,7 @@
 				})
 			},
 			change(index) {
-				if(this.current != index){
-					this.page = 0
-				}
 				this.current = index;
-				this.getArticle()
 			},
 			backAction() {
 				uni.navigateBack()
@@ -93,6 +100,10 @@
 </script>
 
 <style lang="scss">
+	.swiper {
+		position: fixed;
+		width: 100%;
+	}
 	.tabs {
 		background-color: #19BE6B;
 	}

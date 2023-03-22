@@ -1,63 +1,63 @@
 <template>
 	<view>
 		<uni-nav-bar title="项目" backgroundColor="#01a4ff" color="#fff" statusBar=true  />
-		<my-tabs :tabs="tabs" @click="change"></my-tabs>
-		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
-			<view class="item">
-				<image class="image" :src="item.envelopePic" mode="aspectFit"></image>
-				<view class="conten">
-					<view>
-						<text class="title">{{item.title}}</text>
-					</view>
-					<view>
-						<!-- <text class="desc">{{item.desc.substring(0,50)}}</text> -->
-					</view>
-					<view class="time">
-						<text class="title">{{item.author}}</text>
-						<text class="title">{{item.niceDate}}</text>
-					</view>
-				</view>
-			</view>
-			<view class="line"></view>
-		</view>
+		<my-tabs :tabs="tabs" @click="change" :current="current"></my-tabs>
+		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
+			@change="changeSwiper">
+			<swiper-item class="tab-body" v-for="(type, index) in tabs" :key="index">
+				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
+					@scrolltolower="onreachBottom(index)">
+					<myproject :id="type.id"></myproject>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
 		<backTop></backTop>
 	</view>
 </template>
 <script>
-	import {
-		tabBean
-	} from "../bean.js"
+	import {tabBean} from "../bean.js"
+	import myproject from "../../component/myproject.vue"
 	export default {
+		components:{
+			myproject
+		},
 		data() {
 			return {
 				tabs: [],
-				totalData: [],
 				current: 0,
-				bold: true,
-				offset: [5, -5],
-				cid: 0,
-				page: 1
+				duration: 500,
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				},
+				swiperH:0
 			}
 		},
-		onPullDownRefresh() {
-			this.page = 1
-			this.getTreeData()
-		},
 		onLoad() {
+			// 初始化swiper高度
+			let tabH = uni.upx2px(220); //80rpx转换px
+			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
+			uni.getSystemInfoSync()
 			this.getProjectData()
-			this.getTreeData()
+			let that = this
 			uni.$on("backtop", function() {
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 300
+				// 解决view层不同步的问题
+				that.scrollTop = that.old.scrollTop
+				that.$nextTick(function() {
+					that.scrollTop = 0
 				});
 			})
 		},
-		onReachBottom() {
-			this.page++
-			this.getTreeData()
+		destroyed() {
+			uni.$off("myproject")
 		},
 		methods: {
+			onreachBottom(index) {
+				uni.$emit("myproject")
+			},
+			scroll: function(e) {
+				this.old.scrollTop = e.detail.scrollTop
+			},
 			itemClick(item) {
 				console.log("item：", item)
 				uni.navigateTo({
@@ -65,20 +65,14 @@
 				})
 			},
 			
-			fabClick() {
-				uni.pageScrollTo({
-					scrollTop: 0
-				})
-			},
-			
 			change(item) {
 				let index = item.index
-				if (this.current != index) {
-					this.page = 1
-				}
 				this.current = index;
-				this.cid = this.tabs[index].id;
-				this.getTreeData()
+			},
+			
+			changeSwiper(event) {
+				let index = event.detail.current;
+				this.current = index;
 			},
 
 			async getProjectData() {
@@ -88,24 +82,19 @@
 				console.log("项目分类数据:", res.data.data)
 				this.tabs = res.data.data
 			},
-
-			async getTreeData() {
-				const res = await this.$myWebHttp({
-					url: "project/list/" + this.page + "/json?cid=" + this.cid,
-				})
-				console.log("某一个分类数据:", res.data.data.datas)
-				uni.stopPullDownRefresh()
-				if (this.page == 1) {
-					this.totalData = res.data.data.datas
-				} else {
-					this.totalData = this.totalData.concat(res.data.data.datas)
-				}
-			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	.swiper {
+		position: fixed;
+		width: 100%;
+	}
+	.tab-body {
+		width: 100%;
+		height: 100%;
+	}
 	.tabs {
 		background-color: #19BE6B;
 	}

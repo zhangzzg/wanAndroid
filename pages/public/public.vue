@@ -1,14 +1,11 @@
 <template>
 	<view >
-		<view class="header-main">
-			<uni-nav-bar  title="公众号" backgroundColor="#01a4ff" color="#fff" statusBar=true />
-			<u-tabs bgColor="#FFFFFF" active-color="#EE5A24" :list="types" :is-scroll="true" :current="current"
-				@change="change"></u-tabs>
-		</view>
+		<uni-nav-bar  title="公众号" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<my-tabs :tabs="types" @click="change" :current="current"></my-tabs>
 		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
 			@change="changeSwiper">
 			<swiper-item class="tab-body" v-for="(type, index) in types" :key="index">
-				<scroll-view refresher-enabled = 'true' @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
+				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
 					@scrolltolower="onreachBottom(index)">
 					<mylist :id="type.id"></mylist>
 				</scroll-view>
@@ -24,8 +21,6 @@
 			return {
 				types: [],
 				current: 0,
-				swiperH: 0,
-				duration: 500,
 				itemList: [],
 				status: ['loadmore', 'loading', 'nomore'],
 				curStatus: 0,
@@ -35,6 +30,8 @@
 				totalData: [],
 				isBottom: false,
 				scrollTop: 0,
+				swiperH: 0,
+				duration: 500,
 				old: {
 					scrollTop: 0
 				}
@@ -45,7 +42,7 @@
 		},
 		onLoad() {
 			// 初始化swiper高度
-			let tabH = uni.upx2px(80); //80rpx转换px
+			let tabH = uni.upx2px(220); //80rpx转换px
 			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
 			this.getWxarticle()
 			let that = this
@@ -87,9 +84,6 @@
 				this.types = this.tabs = res.data.data
 			},
 			onreachBottom(index) {
-				uni.showLoading({
-					title:'加载更多...',
-				})
 				setTimeout(function () {
 				    uni.$emit("loadMore")
 				}, 800);
@@ -105,16 +99,8 @@
 </script>
 
 <style lang="scss">
-	.header-main{
-		width: 100%;
-	    position: fixed;
-	    top:0;
-	}
 	.swiper {
-		position: fixed;
 		width: 100%;
-		top: 100px;
-		margin-top: 15px;
 	}
 	.tab-body {
 		width: 100%;

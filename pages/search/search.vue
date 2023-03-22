@@ -1,10 +1,12 @@
 <template>
 	<view>
-		<view class="status_bar"></view>
-		<view class="header">
-			<image class="header_avart" :src="bgImg" @click="showDrawer('showLeft')"></image>
-			<view class="header_content">玩安卓</view>
-			<image class="header_search" src="../../static/search.png" mode="aspectFit" @click="search"></image>
+		<view class="titleclass">
+			<view class="status_bar"></view>
+			<view class="header">
+				<image class="header_avart" :src="bgImg" @click="showDrawer('showLeft')"></image>
+				<view class="header_content">玩安卓</view>
+				<image class="header_search" src="../../static/search.png" mode="aspectFit" @click="search"></image>
+			</view>
 		</view>
 		<view class="banner">
 			<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000" style="height: 200px;"
@@ -16,7 +18,7 @@
 				</swiper-item>
 			</swiper>
 			<view class="tabindex">
-				<view v-if="images != null && images.length > 0" v-html="images[nowIndex-1].title"></view>
+				<view v-if="images && images.length > 0" v-html="images[nowIndex-1].title"></view>
 				<view>{{nowIndex}}/{{images.length}}</view>
 			</view>
 		</view>
@@ -70,7 +72,6 @@
 </template>
 <script>
 	import list from '../drawerdatas.js'
-	import uniSection from '../../component/uni-section/uni-section.vue'
 	export default {
 		data() {
 			return {
@@ -118,9 +119,6 @@
 		onReachBottom() {
 			this.page++
 			this.getHomeData()
-		},
-		components: {
-			"uni-section": uniSection,
 		},
 		methods: {
 			login() {
@@ -172,9 +170,15 @@
 						})
 						break;
 					case "常用网站":
+						uni.navigateTo({
+							url: "/pages/camera/camera"
+						})
 						break;
 					case "关于作者":
-						break;			
+					    uni.navigateTo({
+					    	url: '/pages/camera/face'
+					    })
+						break;
 					case "退出登录":
 						uni.showModal({
 							title: '提示',
@@ -324,6 +328,12 @@
 </script>
 
 <style lang="scss">
+	.titleclass {
+		width: 100%;
+		position: fixed;
+		top: 0
+	}
+
 	.line1 {
 		width: 300px;
 		height: 1px;
@@ -383,6 +393,7 @@
 		background-color: #01a4ff;
 		height: 100rpx;
 		text-align: center;
+
 		.header_avart {
 			color: #FFFFFF;
 			width: 45px;
@@ -408,6 +419,7 @@
 
 	.banner {
 		position: relative;
+
 		.tabindex {
 			position: absolute;
 			bottom: 0;

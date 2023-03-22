@@ -7,7 +7,7 @@
 			        }" :inactiveStyle="{
 			            color: '#606266',
 			            transform: 'scale(1)'
-			        }" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;" @click="click">
+			        }" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;" @click="click" >
 		</u-tabs>
 	</view>
 </template>

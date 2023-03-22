@@ -1,30 +1,38 @@
 <template>
 	<view>
 		<view class="status_bar"></view>
-		<my-tabs :tabs="tabs" @click="change"></my-tabs>
-         <view v-if="current == 1">
-			 <view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
-			 	<text class="title">{{item.name}}</text>
-			 	<view class="content">
-			 		<text class="label" v-for="(sitem,index) in item.children" :key="index">{{sitem.name}}</text>
-			 	</view>
-			 	<view class="line"></view>
-			 </view>
-		 </view> 
-		 <view v-else-if="current == 0">
-			<easy-scroll :list="totalsData"></easy-scroll>
-		 </view>
-		<backTop v-if="current == 1"></backTop>
+		<my-tabs :tabs="tabs" @click="change" :current="current"></my-tabs>
+		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
+			@change="changeSwiper">
+			<swiper-item class="tab-body">
+				<scroll-view @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
+					@scrolltolower="onreachBottom(index)">
+					<view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
+						<text class="title">{{item.name}}</text>
+						<view class="content">
+							<text class="label" v-for="(sitem,index) in item.children"
+								:key="index">{{sitem.name}}</text>
+						</view>
+						<view class="line"></view>
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item>
+				<easy-scroll :list="totalsData"></easy-scroll>
+			</swiper-item>
+		</swiper>
+		<backTop v-if="current == 0"></backTop>
 	</view>
 </template>
 <script>
-	import {tabBean} from "../bean.js"
+	import {
+		tabBean
+	} from "../bean.js"
 	import easyScroll from '@/component/easy-scroll.vue'
 	export default {
 		data() {
 			return {
-				tabs: [
-					{
+				tabs: [{
 						name: '导航',
 					},
 					{
@@ -36,7 +44,13 @@
 				current: 0,
 				bold: true,
 				offset: [5, -5],
-				page: 0
+				page: 0,
+				scrollTop: 0,
+				swiperH: 0,
+				duration: 500,
+				old: {
+					scrollTop: 0
+				}
 			}
 		},
 		onPullDownRefresh() {
@@ -44,25 +58,30 @@
 			this.getWxarticleItemData()
 		},
 		onLoad() {
-			switch (this.current) {
-				case 1:
-					this.getTreeData()
-					break;
-				case 0:
-					this.getWxarticleItemData()
-					break;
-			}
+			let that = this
+			// 初始化swiper高度
+			let tabH = uni.upx2px(80); //80rpx转换px
+			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
 			uni.$on("backtop", function() {
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 300
+				that.scrollTop = that.old.scrollTop
+				that.$nextTick(function() {
+					that.scrollTop = 0
 				});
 			})
 		},
-		components:{
+		created() {
+			this.getTreeData()
+			this.getWxarticleItemData()
+		},
+		components: {
 			easyScroll
 		},
 		methods: {
+			onreachBottom(index) {
+				setTimeout(function() {
+					// uni.$emit("loadMore")
+				}, 800);
+			},
 			itemClick(item) {
 				const tabsData = item.children.map(e =>
 					new tabBean(e.name, e.id)
@@ -74,22 +93,16 @@
 						"&&children=" + navData
 				})
 			},
-			fabClick() {
-				uni.pageScrollTo({
-					scrollTop: 0
-				})
+			scroll: function(e) {
+				this.old.scrollTop = e.detail.scrollTop
 			},
 			change(item) {
 				let index = item.index
 				this.current = index;
-				switch (index) {
-					case 1:
-						this.getTreeData()
-						break;
-					case 0:
-						this.getWxarticleItemData()
-						break;
-				}
+			},
+			changeSwiper(event) {
+				let index = event.detail.current;
+				this.current = index;
 			},
 			async getTreeData() {
 				const res = await this.$myWebHttp({
@@ -104,13 +117,26 @@
 					url: "navi/json",
 				})
 				console.log("导航数据:", res.data)
-					this.totalsData = res.data.data
+				this.totalsData = res.data.data
 			},
 		}
 	}
 </script>
 
 <style lang="scss">
+	.header-main{
+		position: fixed;
+		top: 0;
+	}
+	.swiper {
+		width: 100%;
+	}
+
+	.tab-body {
+		width: 100%;
+		height: 100%;
+	}
+
 	.tabs {
 		background-color: #19BE6B;
 	}
@@ -139,5 +165,4 @@
 			}
 		}
 	}
-	
 </style>
