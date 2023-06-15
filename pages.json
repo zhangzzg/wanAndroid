@@ -26,14 +26,6 @@
 			"path": "pages/index/wetherdetail"
 
 		}, {
-			"path": "pages/search/search",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 300
-			}
-
-		}, {
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "",

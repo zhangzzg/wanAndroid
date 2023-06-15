@@ -7,7 +7,7 @@
 			<swiper-item class="tab-body" v-for="(type, index) in types" :key="index">
 				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
 					@scrolltolower="onreachBottom(index)">
-					<mylist :id="type.id"></mylist>
+					<mylist :mid="type.id"></mylist>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
