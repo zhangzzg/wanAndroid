@@ -16,7 +16,6 @@
 					</view>
 				</view>
 			</view>
-			<u-image></u-image>
 			<view class="line"></view>
 		</view>
 		<u-loadmore :status="status" ></u-loadmore>

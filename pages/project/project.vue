@@ -35,7 +35,7 @@
 		},
 		onLoad() {
 			// 初始化swiper高度
-			let tabH = uni.upx2px(220); //80rpx转换px
+			let tabH = uni.upx2px(200);
 			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
 			uni.getSystemInfoSync()
 			this.getProjectData()

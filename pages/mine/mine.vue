@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<view class="status_bar"></view>
-		<my-tabs :tabs="tabs" @click="change" :current="current"></my-tabs>
+		<my-tabs :tabs="tabs" @click="change" :current="current" bgColor = "#01a4ff" lineColor = "#ffffff"></my-tabs>
 		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
 			@change="changeSwiper">
 			<swiper-item class="tab-body">
 				<scroll-view @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
-					@scrolltolower="onreachBottom(index)">
+					@scrolltolower="onreachBottom">
 					<view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 						<text class="title">{{item.name}}</text>
 						<view class="content">
@@ -77,7 +77,7 @@
 			easyScroll
 		},
 		methods: {
-			onreachBottom(index) {
+			onreachBottom() {
 				setTimeout(function() {
 					// uni.$emit("loadMore")
 				}, 800);

@@ -68,6 +68,7 @@
 					uni.$emit("login")
 					uni.navigateBack()
 				} else {
+					console.log("登录失败,用户名：", res.data)
 					uni.showToast({
 						title: res.data.errorMsg,
 						position: "bottom",

@@ -11,6 +11,7 @@ Vue.prototype.$interceptor = myInterceptor
 Vue.prototype.$myConstan = myConstan
 Vue.prototype.$comUtils = comUtils
 
+
 App.mpType = 'app'
 
 // 引入全局uView

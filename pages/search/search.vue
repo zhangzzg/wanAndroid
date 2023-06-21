@@ -22,7 +22,6 @@
 				<view>{{nowIndex}}/{{images.length}}</view>
 			</view>
 		</view>
-
 		<!-- 侧边栏 -->
 		<uni-drawer ref="showLeft" mode="left" :width="300">
 			<view class="drawer_conten">
@@ -85,7 +84,8 @@
 				bgImg: '../../static/login_icon.jpg',
 			}
 		},
-		onLoad() {
+		
+		mounted() {
 			this.getBanner()
 			this.getTopData()
 			this.getHomeData()
@@ -330,8 +330,9 @@
 <style lang="scss">
 	.titleclass {
 		width: 100%;
-		position: fixed;
-		top: 0
+		position: sticky;
+		top: 0;
+		z-index: 999;
 	}
 
 	.line1 {

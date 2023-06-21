@@ -20,6 +20,8 @@
 	.line {
 		width: 750rpx;
 		height: 1px;
+		margin-left: 10px;
+		margin-right: 10px;
 		background-color: #DCDFE6;
 	}
 	.collect_status{
