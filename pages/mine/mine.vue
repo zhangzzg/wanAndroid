@@ -1,27 +1,29 @@
 <template>
 	<view>
-		<view class="status_bar"></view>
-		<my-tabs :tabs="tabs" @click="change" :current="current" bgColor = "#01a4ff" lineColor = "#ffffff"></my-tabs>
-		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
-			@change="changeSwiper">
-			<swiper-item class="tab-body">
-				<scroll-view @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
-					@scrolltolower="onreachBottom">
-					<view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
-						<text class="title">{{item.name}}</text>
-						<view class="content">
-							<text class="label" v-for="(sitem,index) in item.children"
-								:key="index">{{sitem.name}}</text>
+		<view class="header-main">
+			<view class="status_bar"></view>
+			<my-tabs :tabs="tabs" @click="change" :current="current" bgColor = "#01a4ff" lineColor = "#ffffff" activedTextColor = "#ffffff"></my-tabs>
+		</view>
+			<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
+				@change="changeSwiper">
+				<swiper-item class="tab-body">
+					<scroll-view @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
+						@scrolltolower="onreachBottom">
+						<view class="head" v-for="item in totalData" :key=item.id @click="itemClick(item)">
+							<text class="title">{{item.name}}</text>
+							<view class="content">
+								<text class="label" v-for="(sitem,index) in item.children"
+									:key="index">{{sitem.name}}</text>
+							</view>
+							<view class="line"></view>
 						</view>
-						<view class="line"></view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<easy-scroll :list="totalsData"></easy-scroll>
-			</swiper-item>
-		</swiper>
-		<backTop v-if="current == 0"></backTop>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item>
+					<easy-scroll :list="totalsData"></easy-scroll>
+				</swiper-item>
+			</swiper>
+			<backTop v-if="current == 0"></backTop>
 	</view>
 </template>
 <script>
@@ -125,8 +127,9 @@
 
 <style lang="scss">
 	.header-main{
-		position: fixed;
+		position: sticky;
 		top: 0;
+		z-index: 999;
 	}
 	.swiper {
 		width: 100%;

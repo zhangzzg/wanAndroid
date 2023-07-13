@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<u-tabs :current="current" :list="tabs" lineWidth="20" :lineColor="lineColor" :activeStyle="{
-			            color: '#303133',
+			            color: activedTextColor,
 			            fontWeight: 'bold',
 			            transform: 'scale(1.05)'
 			        }" :inactiveStyle="{
-			            color: '#606266',
+			            color: inactiveTextColor,
 			            transform: 'scale(1)'
 			        }" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;" @click="click" :style="{'background-color':bgColor}"> 
 		</u-tabs>
@@ -30,6 +30,14 @@
 			lineColor:{
 				type:String,
 				default:"#01a4ff"
+			},
+			activedTextColor:{
+				type:String,
+				default:"#303133"
+			},
+			inactiveTextColor:{
+				type:String,
+				default:"#606266"
 			}
 		},
 		methods:{

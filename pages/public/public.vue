@@ -4,7 +4,7 @@
 		<my-tabs :tabs="types" @click="change" :current="current"></my-tabs>
 		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
 			@change="changeSwiper">
-			<swiper-item class="tab-body" v-for="(type, index) in types" :key="index">
+			<swiper-item class="tab-body" v-for="(type, index) in types" :key="type.id">
 				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
 					@scrolltolower="onreachBottom(index)">
 					<mylist :mid="type.id"></mylist>
@@ -85,7 +85,7 @@
 			},
 			onreachBottom(index) {
 				setTimeout(function () {
-				    uni.$emit("loadMore")
+				    uni.$emit("loadMore",index)
 				}, 800);
 			},
 			loadData() {

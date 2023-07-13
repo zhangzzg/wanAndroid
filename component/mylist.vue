@@ -39,10 +39,9 @@
 		},
 		created() {
 			let that = this
-			console.log("--传入的-id--=",that.mid)
 			this.getWxarticleItemData()
 			uni.$on("loadMore",(res)=>{
-				console.log("---id--="+that.mid)
+				console.log("res=",res)
 				that.loadMore()
 			})
 		},
