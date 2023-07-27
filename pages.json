@@ -143,6 +143,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/camera/pushlive/pushlive",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#999999",

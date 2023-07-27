@@ -87,7 +87,7 @@
 		
 		mounted() {
 			this.getBanner()
-			this.getTopData()
+			// this.getTopData()
 			this.getHomeData()
 			uni.$on("backtop", function() {
 				uni.pageScrollTo({
@@ -289,22 +289,21 @@
 				this.resTop = await this.$myWebHttp({
 					url: "article/top/json",
 				})
-				console.log("置顶数据数据:", this.resTop.data.data)
 			},
 
 			async getHomeData() {
-				uni.showNavigationBarLoading(); //显示加载动画
+				plus.nativeUI.showWaiting("正在加载数据...")
 				const res = await this.$myWebHttp({
 					url: "article/list/" + this.page + "/json",
 				})
 				console.log("首页数据:", res.data.data.datas)
 				if (this.page == 0) {
-					this.totalData = this.totalData.concat(this.resTop.data.data, res.data.data.datas)
+					this.totalData = res.data.data.datas
 				} else {
 					this.totalData = this.totalData.concat(res.data.data.datas)
 				}
 				uni.stopPullDownRefresh()
-				uni.hideNavigationBarLoading(); // 关闭加载动画
+				plus.nativeUI.closeWaiting()
 			},
 
 			async getBanner() {

@@ -17,7 +17,7 @@
 			</div>
 			<cover-image src="../../../static/image/gai.png" class="gaiimg"></cover-image>
 		</div>
-        <button class="btn" @click="startPreview1">打开摄像头进行人脸识别</button>
+        <button class="btn" @click="startPreview">打开摄像头进行人脸识别</button>
     </view>
 </template>
 <script>
@@ -95,22 +95,20 @@
 	                });
 	            },
 				// 开启摄像头
-	            startPreview1() {
-					console.log("1")
+	            startPreview() {
 					var that = this
-					that.context.startPreview()
-	      //           that.context.startPreview({
-	      //               success: (a) => {
-	      //                   console.log("livePusher.startPreview:" + JSON.stringify(a));
-							// that.Timer = setInterval(function(){
-							// 	that.snapshot()
-							// 	if(that.imgList.length>3){
-							// 		console.log("3")
-							// 		clearInterval(that.Timer)
-							// 	}
-							// },2000)
-	      //               }
-	      //           });
+	                that.context.startPreview({
+	                    success: (a) => {
+	                        console.log("livePusher.startPreview:" + JSON.stringify(a));
+							that.Timer = setInterval(function(){
+								that.snapshot()
+								if(that.imgList.length>3){
+									console.log("3")
+									clearInterval(that.Timer)
+								}
+							},2000)
+	                    }
+	                });
 	            },
 				// 使用plus.zip.compressImage压缩图片并转换成base64
 				getMinImage(imgPath) {
