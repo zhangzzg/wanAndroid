@@ -2,7 +2,7 @@
 	<view>
 		<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
 			<view class="list-title">
-				<text class="author" v-if="item.author.length >0 ">{{item.author}}</text>
+				<text class="author" v-if="item.author.length > 0 ">{{item.author}}</text>
 				<text class="author" v-else>{{item.shareUser}}</text>
 				<text class="time">{{item.niceDate}}</text>
 			</view>
@@ -38,8 +38,10 @@
 		created() {
 			let that = this
 			this.getArticle()
-			uni.$on("loadMoreArticle",function(){
-				 that.loadMore()
+			uni.$on("loadMoreArticle",function(itemId){
+				if(itemId == that.id){
+					 that.loadMore()
+				}
 			})
 		},
 		methods: {
@@ -57,16 +59,13 @@
 				const res = await this.$myWebHttp({
 					url: "article/list/"+this.page+"/json?cid=" + this.id,
 				})
-				console.log("文章：", res.data.data.datas)
-				let datas = res.data.data.datas
-				if(this.page == 0){
-					this.totalData = datas
+				if (res.data.data.curPage < res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status = 'nomore'
+					this.totalData = this.totalData.concat(res.data.data.datas)
 				}else{
-					if(datas.length > 0){
-						this.totalData = this.totalData.concat(datas)
-					}else{
-						this.status = "loadFinish"
-					}
+					this.status = 'nomore'
 				}
 			}
 		}

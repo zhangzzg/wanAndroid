@@ -7,7 +7,7 @@
 			@change="changeSwiper">
 			<swiper-item class="tab-body" v-for="(type, index) in tabs" :key="index">
 				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
-					@scrolltolower="onreachBottom(index)">
+					@scrolltolower="onreachBottom(type.id)">
 					<myarticle :id="type.id"></myarticle>
 				</scroll-view>
 			</swiper-item>
@@ -46,9 +46,9 @@
 			// 初始化swiper高度
 			let tabH = uni.upx2px(220); //80rpx转换px
 			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
-			let obj = option.children.replace("\"([^\"]*)\"", "$1");
+			let obj = decodeURIComponent(option.children);
 			let tabs1 = JSON.parse(obj)
-			console.log("tabs1: ", tabs1)
+			console.log("接收的tab: ", tabs1)
 			this.tabs = tabs1
 			this.getArticle()
 			uni.$on("backtop",function(){
@@ -60,9 +60,9 @@
 			})
 		},
 		methods: {
-			onreachBottom(index) {
+			onreachBottom(itemID) {
 				setTimeout(function () {
-				    uni.$emit("loadMoreArticle")
+				    uni.$emit("loadMoreArticle",itemID)
 				}, 800);
 			},
 			scroll: function(e) {
@@ -71,7 +71,6 @@
 			changeSwiper(event) {
 				let index = event.detail.current;
 				this.current = index;
-				console.log("changeSwiper切换获取cid: ", this.cid)
 			},
 			actionDetail(item){
 				uni.navigateTo({
@@ -88,7 +87,6 @@
 				const res = await this.$myWebHttp({
 					url: "article/list/"+this.page+"/json?cid=" + this.tabs[this.current].id,
 				})
-				console.log("文章：", res.data.data.datas)
 				if(this.page == 0){
 					this.totalData = res.data.data.datas
 				}else{

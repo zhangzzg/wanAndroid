@@ -85,14 +85,16 @@
 				}, 800);
 			},
 			itemClick(item) {
-				const tabsData = item.children.map(e =>
-					new tabBean(e.name, e.id)
-				)
+				const tabsData = item.children.map(e =>{
+					 return {
+						 	id:e.id,
+						 	name:e.name
+					 }
+				})
 				const navData = JSON.stringify(tabsData);
-				console.log("item：", item)
 				uni.navigateTo({
-					url: "./article/article?uid=" + item.id + "&&title=" + item.name +
-						"&&children=" + navData
+					url: "./article/article?uid=" + item.id + "&title=" + item.name +
+						"&children=" + encodeURIComponent(navData)
 				})
 			},
 			scroll: function(e) {

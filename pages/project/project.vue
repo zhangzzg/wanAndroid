@@ -6,7 +6,7 @@
 			@change="changeSwiper">
 			<swiper-item class="tab-body" v-for="(type, index) in tabs" :key="index">
 				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
-					@scrolltolower="onreachBottom(index)">
+					@scrolltolower="onreachBottom(type.id)">
 					<myproject :id="type.id"></myproject>
 				</scroll-view>
 			</swiper-item>
@@ -52,8 +52,8 @@
 			uni.$off("myproject")
 		},
 		methods: {
-			onreachBottom(index) {
-				uni.$emit("myproject")
+			onreachBottom(itemId) {
+				uni.$emit("myproject",itemId)
 			},
 			scroll: function(e) {
 				this.old.scrollTop = e.detail.scrollTop

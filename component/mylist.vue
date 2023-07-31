@@ -27,12 +27,7 @@
 		},
 		data() {
 			return {
-				tabs: [],
 				totalData: [],
-				current: 0,
-				bold: true,
-				offset: [5, -5],
-				cid: 408,
 				page: 1,
 				status:"nomore"
 			}
@@ -40,9 +35,11 @@
 		created() {
 			let that = this
 			this.getWxarticleItemData()
-			uni.$on("loadMore",(res)=>{
-				console.log("res=",res)
-				that.loadMore()
+			uni.$on("loadMore",(itemId)=>{
+				if(this.mid == itemId ){
+					console.log("itemId=",itemId)
+					that.loadMore()
+				}
 			})
 		},
 		destroyed() {
@@ -102,24 +99,18 @@
 				}
 			},
 			async getWxarticleItemData() {
-				console.log("传入的ID：",this.mid)
 				this.status = 'loading'
 				const res = await this.$myWebHttp({
 					url: "wxarticle/list/" + this.mid + "/" + this.page + "/json",
 				})
-				console.log("公众号某个分类数据:", res.data.data.datas)
-				if (this.page == 1) {
-					if(res.data.data.datas.length > 0){
-						this.totalData = res.data.data.datas
-					}else{
-						this.status = 'nomore'
-					}
-				} else {
-					if(res.data.data.datas.length > 0){
-						this.totalData = this.totalData.concat(res.data.data.datas)
-					}else{
-						this.status = 'nomore'
-					}
+				console.log("公众号某个分类数据:", res.data)
+				if (res.data.data.curPage < res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status = 'nomore'
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}else{
+					this.status = 'nomore'
 				}
 			},
 		}

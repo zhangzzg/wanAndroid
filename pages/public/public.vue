@@ -6,7 +6,7 @@
 			@change="changeSwiper">
 			<swiper-item class="tab-body" v-for="(type, index) in types" :key="type.id">
 				<scroll-view  @scroll="scroll" :scroll-top="scrollTop" scroll-y style="height: 100%;width: 100%;"
-					@scrolltolower="onreachBottom(index)">
+					@scrolltolower="onreachBottom(type.id)">
 					<mylist :mid="type.id"></mylist>
 				</scroll-view>
 			</swiper-item>
@@ -28,13 +28,12 @@
 				page: 1,
 				tabs: [],
 				totalData: [],
-				isBottom: false,
 				scrollTop: 0,
 				swiperH: 0,
 				duration: 500,
 				old: {
 					scrollTop: 0
-				}
+				},
 			}
 		},
 		components: {
@@ -42,12 +41,11 @@
 		},
 		onLoad() {
 			// 初始化swiper高度
-			let tabH = uni.upx2px(220); //80rpx转换px
+			let tabH = uni.upx2px(220);
 			this.swiperH = uni.getSystemInfoSync().windowHeight - tabH;
 			this.getWxarticle()
 			let that = this
 			uni.$on("backtop", function() {
-				// 解决view层不同步的问题
 				that.scrollTop = that.old.scrollTop
 				that.$nextTick(function() {
 					that.scrollTop = 0
@@ -60,40 +58,23 @@
 			},
 			change(item) {
 				let index = item.index
-				if (this.current != index) {
-					this.page = 1
-				}
 				this.current = index;
 				this.cid = this.tabs[index].id;
-				console.log("切换获取cid: ", this.cid)
 			},
 			changeSwiper(event) {
 				let index = event.detail.current;
-				if (this.current != index) {
-					this.page = 1
-				}
 				this.current = index;
 				this.cid = this.tabs[index].id;
-				console.log("changeSwiper切换获取cid: ", this.cid)
 			},
 			async getWxarticle() {
 				const res = await this.$myWebHttp({
 					url: "wxarticle/chapters/json",
 				})
-				console.log("公众号分类数据:", res.data.data)
 				this.types = this.tabs = res.data.data
 			},
-			onreachBottom(index) {
-				setTimeout(function () {
-				    uni.$emit("loadMore",index)
-				}, 800);
+			onreachBottom(itemId) {
+				uni.$emit("loadMore",itemId)
 			},
-			loadData() {
-
-			},
-			navto(e) {
-
-			}
 		}
 	}
 </script>

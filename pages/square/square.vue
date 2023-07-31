@@ -17,6 +17,7 @@
 				</view>
 				<view class="line"></view>
 			</view>
+			<u-loadmore :status="status[1]" ></u-loadmore>
 			<backTop />
 		</view>
 	</view>
@@ -30,7 +31,8 @@
 				bold: true,
 				offset: [5, -5],
 				cid: 408,
-				page: 0
+				page: 0,
+				status: ['loadmore', 'loading', 'nomore'],
 			}
 		},
 		onLoad() {
@@ -104,11 +106,13 @@
 					url: "user_article/list/" + this.page + "/json",
 				})
 				uni.stopPullDownRefresh()
-				console.log("广场数据:", res.data.data.datas)
-				if(this.page == 0){
-					this.totalData = res.data.data.datas
-				}else{
+				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status[2]
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}else{
+					this.status[2]
 				}
 			},
 		}
