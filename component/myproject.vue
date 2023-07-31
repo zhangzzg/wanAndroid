@@ -33,9 +33,6 @@
 			return {
 				totalData: [],
 				current: 0,
-				bold: true,
-				offset: [5, -5],
-				cid: 0,
 				page: 1,
 				status:"nomore"
 			}
@@ -44,8 +41,10 @@
 		created() {
 			this.getTreeData()
 			let that = this
-			uni.$on("myproject", function() {
-				that.loadMore()
+			uni.$on("myproject", function(itemId) {
+				if(itemId == that.id ){
+					that.loadMore()
+				}
 			})
 		},
 		methods: {
@@ -54,18 +53,15 @@
 				this.getTreeData()
 			},
 			itemClick(item) {
-				console.log("item：", item)
 				uni.navigateTo({
-					url: "../search/detail/detail?link=" + item.link + "&&title=" + item.title
+					url: "../search/detail/detail?link=" + item.link + "&title=" + item.title
 				})
 			},
-			
 			fabClick() {
 				uni.pageScrollTo({
 					scrollTop: 0
 				})
 			},
-			
 			change(item) {
 				let index = item.index
 				if (this.current != index) {
@@ -75,22 +71,19 @@
 				this.cid = this.tabs[index].id;
 				this.getTreeData()
 			},
-
 			async getTreeData() {
 				this.status = 'loading'
 				const res = await this.$myWebHttp({
 					url: "project/list/" + this.page + "/json?cid=" + this.id,
 				})
-				console.log("某一个分类数据:", res.data.data.datas)
 				let datas = res.data.data.datas
-				if (this.page == 1) {
-					  this.totalData = datas
-				} else {
-					  if(datas.length > 0){
-						 this.totalData = this.totalData.concat(datas)
-					  }else{
-						 this.status = 'nomore'
-					  }
+				if (res.data.data.curPage < res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(datas)
+					this.status = 'nomore'
+				}else{
+					this.status = 'nomore'
 				}
 			}
 		}

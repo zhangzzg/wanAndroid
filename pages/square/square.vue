@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<uni-nav-bar class="header-main"  title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
-		<view style="margin-top: 160rpx;">
+		<uni-nav-bar class="header-main" title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<view>
 			<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 				<view class="title">
 					<view >
@@ -17,6 +17,7 @@
 				</view>
 				<view class="line"></view>
 			</view>
+			  <u-loadmore :status="status" ></u-loadmore>
 			<backTop />
 		</view>
 	</view>
@@ -27,10 +28,8 @@
 		data() {
 			return {
 				totalData: [],
-				bold: true,
-				offset: [5, -5],
-				cid: 408,
-				page: 0
+				page: 0,
+				status: 'nomore',
 			}
 		},
 		onLoad() {
@@ -57,7 +56,6 @@
 				})
 			},
 			itemClick(item){
-				console.log("item：",item)
 				uni.navigateTo({
 					url:"../search/detail/detail?link="+item.link+"&&title="+item.title
 				})
@@ -100,15 +98,18 @@
 				}
 			},
 			async getWxarticleItemData() {
+				this.status = 'loading'
 				const res = await this.$myWebHttp({
 					url: "user_article/list/" + this.page + "/json",
 				})
 				uni.stopPullDownRefresh()
-				console.log("广场数据:", res.data.data.datas)
-				if(this.page == 0){
-					this.totalData = res.data.data.datas
-				}else{
+				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status = 'nomore'
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}else{
+					this.status = 'nomore'
 				}
 			},
 		}
@@ -118,7 +119,7 @@
 <style lang="scss">
 	.header-main{
 		width: 100%;
-	    position: fixed;
+	    position: sticky;
 	    top:0;
 	}
 	.list-item {
@@ -138,7 +139,7 @@
 				padding-right: 8rpx;
 			}
 			.text {
-			 color: #999999;
+			    color: #999999;
 				font-size: 20rpx;
 			}
 		}

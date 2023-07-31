@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar leftIcon="back" @clickLeft="backAction" title="收藏" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<uni-nav-bar  class="header-main" leftIcon="back" @clickLeft="backAction" title="收藏" backgroundColor="#01a4ff" color="#fff" statusBar=true />
 		<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 			<view class="title">
 				<text class="text" v-if="item.author">{{item.author}}</text>
@@ -14,6 +14,7 @@
 			</view>
 			<view class="line" ></view>
 		</view>
+		<u-loadmore :status="status" ></u-loadmore>
 		<backTop></backTop>
 	</view>
 </template>
@@ -23,7 +24,8 @@
 		data() {
 			return {
 				totalData: [],
-				page: 0
+				page: 0,
+				status:"nomore"
 			}
 		},
 		onLoad() {
@@ -79,11 +81,14 @@
 					url: "lg/collect/list/"+this.page+"/json",
 				})
 				uni.stopPullDownRefresh()
-				console.log("收藏分类:", res.data.data.datas)
-				if(this.page == 0){
-					this.totalData = res.data.data.datas
+				let datas = res.data.data.datas
+				if (res.data.data.curPage < res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.totalData = this.totalData.concat(datas)
+					this.status = 'nomore'
 				}else{
-					this.totalData = this.totalData.concat(res.data.data.datas)
+					this.status = 'nomore'
 				}
 			},
 		}
@@ -91,6 +96,11 @@
 </script>
 
 <style lang="scss">
+	.header-main{
+		width: 100%;
+	    position: sticky;
+	    top:0;
+	}
 	.list-item {
 		display: flex;
 		flex-direction: column;

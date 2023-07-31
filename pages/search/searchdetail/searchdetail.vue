@@ -41,7 +41,6 @@
 				const res = await this.$myWebHttp({
 					url: "hotkey/json",
 				})
-				console.log("热门搜索数据:", res.data.data)
 				this.hotKeys = res.data.data
 			},
 		}

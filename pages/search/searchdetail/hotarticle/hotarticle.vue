@@ -2,7 +2,7 @@
 	<view>
 		<uni-nav-bar class="header-main" leftIcon="back" @clickLeft="backAction" :title="keyword"
 			backgroundColor="#01a4ff" color="#fff" statusBar="true" />
-		<view style="margin-top: 160rpx;">
+		<view>
 			<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 				<view class="title">
 					<view>
@@ -23,6 +23,7 @@
 				</view>
 				<view class="line"></view>
 			</view>
+			  <u-loadmore :status="status" ></u-loadmore>
 			<backTop />
 		</view>	
 	</view>
@@ -32,6 +33,7 @@
 	export default {
 		data() {
 			return {
+				status:"nomore",
 				totalData: [],
 				keyword: "面试",
 				page: 0
@@ -61,16 +63,20 @@
 
 		methods: {
 			async getHotKeyData() {
+				this.status = 'loading'
 				const res = await this.$myWebHttp({
 					url: "article/query/" + this.page + "/json?k=" + this.keyword,
 					method: 'POST',
 				})
-				console.log("热门关键字搜索文章数据:", res.data.data.datas)
+				console.log("热门关键字搜索文章数据:", res.data)
 				uni.stopPullDownRefresh()
-				if (this.page == 0) {
-					this.totalData = res.data.data.datas
-				} else {
+				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status = 'nomore'
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}else{
+					this.status = 'nomore'
 				}
 			},
 			isPubulic(str) {
@@ -135,7 +141,7 @@
 <style lang="scss">
 	.header-main {
 		width: 100%;
-		position: fixed;
+		position: sticky;
 		top: 0;
 	}
 

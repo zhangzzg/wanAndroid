@@ -51,7 +51,24 @@
             },
             /* ios打包配置 */
             "sdkConfigs" : {
-                "ad" : {}
+                "ad" : {},
+                "oauth" : {}
+            }
+        },
+        "nativePlugins" : {
+            "BuglyModule" : {
+                "__plugin_info__" : {
+                    "name" : "buglyModule",
+                    "description" : "练习",
+                    "platforms" : "Android",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
             }
         }
     },

@@ -66,28 +66,35 @@
 				<view class="line"></view>
 			</view>
 		</view>
+		<u-loadmore :status="status[1]" ></u-loadmore>
 		<backTop></backTop>
 	</view>
 </template>
 <script>
 	import list from '../drawerdatas.js'
+	var buglyModule = uni.requireNativePlugin("buglyModule")
 	export default {
 		data() {
 			return {
 				list: list,
 				images: [],
 				totalData: [],
-				resTop: [],
 				page: 0,
 				nowIndex: 1,
 				username: "登录",
 				bgImg: '../../static/login_icon.jpg',
+				status: ['loadmore', 'loading', 'nomore'],
 			}
 		},
 		
 		mounted() {
+			uni.showLoading({
+				title:"加载数据中..."
+			})
+			buglyModule.initBugly("d447997385",value =>{
+				 console.log(value)
+			})
 			this.getBanner()
-			// this.getTopData()
 			this.getHomeData()
 			uni.$on("backtop", function() {
 				uni.pageScrollTo({
@@ -113,7 +120,6 @@
 		onPullDownRefresh() {
 			console.log("下拉刷新")
 			this.page = 0
-			this.getTopData()
 			this.getHomeData()
 		},
 		onReachBottom() {
@@ -127,21 +133,6 @@
 						url: '/pages/login/login'
 					})
 				}
-				// uni.navigateTo({
-				// 	url: '/pages/login/login',
-				// 	events:{
-				// 		// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-				//        acceptDataFromOpenedPage(data){
-				// 			console.log("acceptDataFromOpenedPage: ",data)
-				// 		},
-				// 		someEvent(data){
-				// 			console.log("someEvent: ",data)
-				// 		}
-				// 	},
-				// 	success: (res) => {
-				// 		 res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'data from starter page' })
-				// 	}
-
 			},
 			changeSwiper(e) {
 				this.nowIndex = e.detail.current + 1;
@@ -154,30 +145,25 @@
 						})
 						break;
 					case "我的收藏":
-						if (!this.$comUtils.isLogin()) {
-							uni.navigateTo({
-								url: '/pages/login/login'
-							})
-						} else {
-							uni.navigateTo({
-								url: "/pages/collect/collect"
-							})
-						}
+					    let targetUrl = this.$comUtils.isLogin()? "/pages/collect/collect":"/pages/login/login"
+						uni.navigateTo({
+							url: targetUrl
+						})
 						break;
 					case "我的文章":
-						uni.navigateTo({
-							url: "/pages/test/test"
-						})
+						// uni.navigateTo({
+						// 	url: "/pages/test/test"
+						// })
 						break;
 					case "常用网站":
-						uni.navigateTo({
-							url: "/pages/camera/camera"
-						})
+						// uni.navigateTo({
+						// 	url: "/pages/camera/camera"
+						// })
 						break;
 					case "关于作者":
-					    uni.navigateTo({
-					    	url: '/pages/camera/face'
-					    })
+					    // uni.navigateTo({
+					    // 	url: '/pages/camera/face'
+					    // })
 						break;
 					case "退出登录":
 						uni.showModal({
@@ -185,7 +171,6 @@
 							content: '确定退出登录？',
 							success: (res) => {
 								if (res.confirm) {
-									console.log('用户点击确定');
 									this.logout()
 								} else if (res.cancel) {
 									console.log('用户点击取消');
@@ -285,25 +270,20 @@
 				}
 			},
 
-			async getTopData() {
-				this.resTop = await this.$myWebHttp({
-					url: "article/top/json",
-				})
-			},
-
 			async getHomeData() {
-				plus.nativeUI.showWaiting("正在加载数据...")
 				const res = await this.$myWebHttp({
 					url: "article/list/" + this.page + "/json",
 				})
-				console.log("首页数据:", res.data.data.datas)
-				if (this.page == 0) {
-					this.totalData = res.data.data.datas
-				} else {
+				uni.hideLoading()
+				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
+				} else if(res.data.data.curPage == res.data.data.pageCount) {
+					this.status[2]
+					this.totalData = this.totalData.concat(res.data.data.datas)
+				}else{
+					this.status[2]
 				}
 				uni.stopPullDownRefresh()
-				plus.nativeUI.closeWaiting()
 			},
 
 			async getBanner() {
@@ -311,17 +291,11 @@
 					url: "banner/json",
 				})
 				this.images = res.data.data
-				console.log("banner数据:", res.data.data)
 			},
 
 			btnClick() {
-				console.log("btnClick: ", this.$refs.cpn.msg)
 				this.$refs.cpn.open()
 			},
-
-			getParenData() {
-				console.log("getParenData")
-			}
 		},
 	}
 </script>
