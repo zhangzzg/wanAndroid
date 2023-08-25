@@ -30,6 +30,10 @@
 				totalData: [],
 				page: 0,
 				status: 'nomore',
+				bold: true,
+				offset: [5, -5],
+				cid: 408,
+				page: 0,
 			}
 		},
 		onLoad() {
