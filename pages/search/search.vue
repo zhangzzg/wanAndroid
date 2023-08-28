@@ -38,7 +38,6 @@
 				</view>
 			</view>
 		</uni-drawer>
-
 		<!-- 列表数据 -->
 		<view>
 			<view class="list-item" v-for="(item,index) in totalData" :key=index @click="actionDetail(item)">
@@ -66,7 +65,7 @@
 				<view class="line"></view>
 			</view>
 		</view>
-		<u-loadmore :status="status[1]" ></u-loadmore>
+		   <u-loadmore :status="status[1]" ></u-loadmore>
 		<backTop></backTop>
 	</view>
 </template>
@@ -86,7 +85,6 @@
 				status: ['loadmore', 'loading', 'nomore'],
 			}
 		},
-		
 		mounted() {
 			uni.showLoading({
 				title:"加载数据中..."
@@ -218,19 +216,16 @@
 					url: "./searchdetail/searchdetail"
 				})
 			},
-
 			imageClick(item) {
 				uni.navigateTo({
 					url: "./detail/detail?link=" + item.url + "&&title=" + item.title
 				})
 			},
-
 			actionDetail(item) {
 				uni.navigateTo({
 					url: "./detail/detail?link=" + item.link + "&&title=" + item.title
 				})
 			},
-
 			async favClick(item) {
 				let isLogin = this.$comUtils.isLogin()
 				if (!isLogin) {
@@ -269,7 +264,6 @@
 					}
 				}
 			},
-
 			async getHomeData() {
 				const res = await this.$myWebHttp({
 					url: "article/list/" + this.page + "/json",
@@ -285,14 +279,12 @@
 				}
 				uni.stopPullDownRefresh()
 			},
-
 			async getBanner() {
 				const res = await this.$myWebHttp({
 					url: "banner/json",
 				})
 				this.images = res.data.data
 			},
-
 			btnClick() {
 				this.$refs.cpn.open()
 			},

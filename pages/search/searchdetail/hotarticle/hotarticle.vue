@@ -41,7 +41,7 @@
 		},
 
 		onLoad(option) {
-			this.keyword = option.keyword == null ? "面试" : option.keyword
+			this.keyword = option.keyword? option.keyword : "面试"
 			this.getHotKeyData()
 			uni.$on("backtop", function() {
 				uni.pageScrollTo({
@@ -68,7 +68,6 @@
 					url: "article/query/" + this.page + "/json?k=" + this.keyword,
 					method: 'POST',
 				})
-				console.log("热门关键字搜索文章数据:", res.data)
 				uni.stopPullDownRefresh()
 				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)

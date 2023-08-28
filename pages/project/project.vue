@@ -15,7 +15,6 @@
 	</view>
 </template>
 <script>
-	import {tabBean} from "../bean.js"
 	import myproject from "../../component/myproject.vue"
 	export default {
 		components:{

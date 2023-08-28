@@ -27,9 +27,6 @@
 	</view>
 </template>
 <script>
-	import {
-		tabBean
-	} from "../bean.js"
 	import easyScroll from '@/component/easy-scroll.vue'
 	export default {
 		data() {

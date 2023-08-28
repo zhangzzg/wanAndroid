@@ -19,7 +19,7 @@
 			}
 		},
 		onLoad(option) {
-			this.link = option.link
+			this.link = decodeURIComponent(option.link)
 			this.title = option.title
 			uni.setNavigationBarTitle({
 				title:this.title

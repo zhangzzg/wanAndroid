@@ -57,7 +57,7 @@
 			itemClick(item) {
 				console.log("item：", item)
 				uni.navigateTo({
-					url: "../search/detail/detail?link=" + item.link + "&title=" + item.title
+					url: "../search/detail/detail?link=" + encodeURIComponent(item.link) + "&title=" + item.title
 				})
 			},
 			async favClick(item) {
