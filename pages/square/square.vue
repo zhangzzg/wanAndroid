@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar class="header-main" title="广场" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<uni-nav-bar class="header-main" title="广场" backgroundColor="#dd524d" color="#fff" statusBar=true />
 		<view>
 			<view class="list-item" v-for="item in totalData" :key=item.id @click="itemClick(item)">
 				<view class="title">

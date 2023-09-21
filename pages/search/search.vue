@@ -71,7 +71,10 @@
 </template>
 <script>
 	import list from '../drawerdatas.js'
-	var buglyModule = uni.requireNativePlugin("buglyModule")
+	 // #ifdef APP-PLUS
+		var buglyModule = uni.requireNativePlugin("buglyModule")
+		const modal = uni.requireNativePlugin('modal');
+	// #endif
 	export default {
 		data() {
 			return {
@@ -85,13 +88,16 @@
 				status: ['loadmore', 'loading', 'nomore'],
 			}
 		},
+		onHide() {
+			// buglyModule.showToas("即将离开学习界面3")
+		},
 		mounted() {
-			uni.showLoading({
-				title:"加载数据中..."
-			})
+			plus.nativeUI.showWaiting("加载数据中...")
+			// #ifdef APP-PLUS
 			buglyModule.initBugly("d447997385",value =>{
 				 console.log(value)
 			})
+			// #endif
 			this.getBanner()
 			this.getHomeData()
 			uni.$on("backtop", function() {
@@ -268,7 +274,7 @@
 				const res = await this.$myWebHttp({
 					url: "article/list/" + this.page + "/json",
 				})
-				uni.hideLoading()
+				plus.nativeUI.closeWaiting()
 				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
 				} else if(res.data.data.curPage == res.data.data.pageCount) {
@@ -356,7 +362,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		background-color: #01a4ff;
+		background-color: $uni-color-primary;
 		height: 100rpx;
 		text-align: center;
 

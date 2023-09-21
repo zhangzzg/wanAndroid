@@ -2,7 +2,7 @@
 	<view>
 		<view class="header-main">
 			<view class="status_bar"></view>
-			<my-tabs :tabs="tabs" @click="change" :current="current" bgColor = "#01a4ff" lineColor = "#ffffff" activedTextColor = "#ffffff"></my-tabs>
+			<my-tabs :tabs="tabs" @click="change" :current="current" bgColor = "#dd524d" lineColor = "#ffffff" activedTextColor = "#ffffff"></my-tabs>
 		</view>
 			<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
 				@change="changeSwiper">

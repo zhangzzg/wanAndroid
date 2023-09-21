@@ -29,7 +29,7 @@
 			},
 			lineColor:{
 				type:String,
-				default:"#01a4ff"
+				default:"#dd524d"
 			},
 			activedTextColor:{
 				type:String,

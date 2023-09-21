@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar  title="公众号" backgroundColor="#01a4ff" color="#fff" statusBar=true />
+		<uni-nav-bar  title="公众号" backgroundColor="#dd524d" color="#fff" statusBar=true />
 		<my-tabs :tabs="types" @click="change" :current="current"></my-tabs>
 		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"
 			@change="changeSwiper">

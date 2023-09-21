@@ -51,7 +51,7 @@
 	.search {
 		display: flex;
 		align-items: center;
-		background-color: #01a4ff;
+		background-color: #dd524d;
 		padding: 20rpx;
 
 		.back {

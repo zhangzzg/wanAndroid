@@ -19,7 +19,7 @@
                     <view class="title"><text>{{item.name}}</text></view>
                     <view class="item-container" >
                         <view class="item" v-for="(sitem,index) in item.articles" :key="index" @click="itemClick(sitem)">
-                            <view style="background-color: #01a4ff;font-size: 28rpx;
+                            <view style="background-color: #dd524d;font-size: 28rpx;
 							 margin:5px;padding: 5px;border-radius: 3px; color: #ffffff;">{{sitem.title}}</view>
                         </view>
                     </view>
@@ -122,7 +122,7 @@ export default {
             text-align center
             transition: transform .1s linear;
             &.active
-                color: #01a4ff
+                color: #dd524d
                 transform-origin: center center;
                 transform: scale(1.32);
 			&.inactive

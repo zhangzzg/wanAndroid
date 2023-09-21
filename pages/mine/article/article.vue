@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar leftIcon="back" @clickLeft="backAction" :title="name" backgroundColor="#01a4ff" color="#fff"
+		<uni-nav-bar leftIcon="back" @clickLeft="backAction" :title="name" backgroundColor="#dd524d" color="#fff"
 			statusBar=true />
 		<my-tabs :tabs="tabs" :current="current"></my-tabs>
 		<swiper class="swiper" v-bind:style="{height:swiperH+'px'}" :duration="duration" :current="current"

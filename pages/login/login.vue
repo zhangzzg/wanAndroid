@@ -24,20 +24,6 @@
 				islogin: false
 			}
 		},
-		/**onLoad() {
-			  // #ifdef APP-NVUE
-			  const eventChannel = this.$scope.eventChannel; // 兼容APP-NVUE
-			  // #endif
-			  // #ifndef APP-NVUE
-			  const eventChannel = this.getOpenerEventChannel();
-			  // #endif
-			  eventChannel.emit('acceptDataFromOpenedPage', {data: 'data from test page'});
-			  eventChannel.emit('someEvent', {data: 'data from test page for someEvent'});
-			  // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
-			  eventChannel.on('acceptDataFromOpenerPage', function(data) {
-			        console.log("接收的数据:",data)
-			  })
-		},*/
 		methods: {
 			close() {
 				uni.navigateBack()

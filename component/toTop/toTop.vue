@@ -10,7 +10,6 @@
 	export default {
 		methods:{
 			toTop(){
-				// this.$emit('backtop')
 				uni.$emit('backtop')
 			}
 		}
@@ -22,7 +21,7 @@
 	position: fixed;
 	width: 60px; 
 	height: 60px;
-	background: #01a4ff;
+	background: #dd524d;
 	z-index: 55; 
 	bottom: 70px; 
 	right: 15px;
