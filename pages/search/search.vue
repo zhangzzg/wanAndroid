@@ -72,7 +72,7 @@
 <script>
 	import list from '../drawerdatas.js'
 	 // #ifdef APP-PLUS
-		var buglyModule = uni.requireNativePlugin("buglyModule")
+		const buglyModule = uni.requireNativePlugin("buglyModule")
 		const modal = uni.requireNativePlugin('modal');
 	// #endif
 	export default {
@@ -89,7 +89,7 @@
 			}
 		},
 		onHide() {
-			// buglyModule.showToas("即将离开学习界面3")
+			// buglyModule.showToas("即将离开学习界面")
 		},
 		mounted() {
 			plus.nativeUI.showWaiting("加载数据中...")
@@ -244,29 +244,21 @@
 							url: "lg/uncollect_originId/" + item.id + "/json",
 							method: 'POST'
 						})
-						if (res.data.errorCode == 0) {
-							item.collect = false
-						} else {
-							uni.showToast({
+						res.data.errorCode == 0 ? item.collect = false : uni.showToast({
 								title: '取消收藏失败' + res.data.errorMsg,
 								duration: 2000,
 								position: "bottom"
 							});
-						}
 					} else {
 						const res = await this.$myWebHttp({
 							url: "lg/collect/" + item.id + "/json",
 							method: 'POST'
 						})
-						if (res.data.errorCode == 0) {
-							item.collect = true
-						} else {
-							uni.showToast({
+						res.data.errorCode == 0 ? item.collect = true : uni.showToast({
 								title: '收藏失败' + res.data.errorMsg,
 								duration: 2000,
 								position: "bottom"
 							});
-						}
 					}
 				}
 			},
@@ -278,7 +270,7 @@
 				if (res.data.data.curPage < res.data.data.pageCount) {
 					this.totalData = this.totalData.concat(res.data.data.datas)
 				} else if(res.data.data.curPage == res.data.data.pageCount) {
-					this.status[2]
+					this.status[2] 
 					this.totalData = this.totalData.concat(res.data.data.datas)
 				}else{
 					this.status[2]
@@ -315,7 +307,7 @@
 	.drawer_head {
 		display: flex;
 		height: 250px;
-		background-color: #01a4ff;
+		background-color: $uni-color-primary;
 		flex-flow: column;
 		justify-content: center;
 		align-items: center;
@@ -348,7 +340,6 @@
 				padding: 10px;
 				display: flex;
 				flex-flow: row;
-
 				.image {
 					width: 20px;
 					height: 20px;
@@ -365,7 +356,6 @@
 		background-color: $uni-color-primary;
 		height: 100rpx;
 		text-align: center;
-
 		.header_avart {
 			color: #FFFFFF;
 			width: 45px;

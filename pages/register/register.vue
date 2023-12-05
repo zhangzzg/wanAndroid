@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar leftIcon="back" @clickLeft="backAction" title="注册" backgroundColor="#01a4ff" color="#fff"
+		<uni-nav-bar leftIcon="back" @clickLeft="backAction" title="注册" backgroundColor="#dd524d" color="#fff"
 			statusBar=true />
 	    <view class="head">
 			<image src="../../static/login_icon.jpg" class="image"></image>
